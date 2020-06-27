@@ -1,0 +1,199 @@
+import produce from 'immer';
+
+type BcategoryState = {
+    bcategory: {
+        name: string,
+        Scategories: {
+            name: string
+        }[],
+    }[],
+    isAddingBcategory: boolean,
+    scategoryList: {
+        name: string,
+    }[],
+};
+
+export const initialState: BcategoryState = {
+    bcategory: [],
+    isAddingBcategory: false,
+    scategoryList: [],
+};
+
+export const ADD_BCATEGORY_REQUEST = 'ADD_BCATEGORY_REQUEST';
+export const ADD_BCATEGORY_SUCCESS = 'ADD_BCATEGORY_SUCCESS';
+export const ADD_BCATEGORY_FAILURE = 'ADD_BCATEGORY_FAILURE';
+
+export const ADD_SCATEGORY_REQUEST = 'ADD_SCATEGORY_REQUEST';
+export const ADD_SCATEGORY_SUCCESS = 'ADD_SCATEGORY_SUCCESS';
+export const ADD_SCATEGORY_FAILURE = 'ADD_SCATEGORY_FAILURE';
+
+export const GET_BCATEGORY_REQUEST = 'GET_BCATEGORY_REQUEST';
+export const GET_BCATEGORY_SUCCESS = 'GET_BCATEGORY_SUCCESS';
+export const GET_BCATEGORY_FAILURE = 'GET_BCATEGORY_FAILURE';
+
+export const GET_SCATEGORYLIST_REQUEST = 'GET_SCATEGORYLIST_REQUEST';
+export const GET_SCATEGORYLIST_SUCCESS = 'GET_SCATEGORYLIST_SUCCESS';
+export const GET_SCATEGORYLIST_FAILURE = 'GET_SCATEGORYLIST_FAILURE';
+
+export const CHANGE_BCATEGORY_ORDER_REQUEST = 'CHANGE_BCATEGORY_ORDER_REQUEST';
+export const CHANGE_BCATEGORY_ORDER_SUCCESS = 'CHANGE_BCATEGORY_ORDER_SUCCESS';
+export const CHANGE_BCATEGORY_ORDER_FAILURE = 'CHANGE_BCATEGORY_ORDER_FAILURE';
+
+export interface AddBcategoryRequestAction {
+    type: typeof ADD_BCATEGORY_REQUEST,
+    data: string,
+    order: number,
+};
+interface AddBcategorySuccessAction {
+    type: typeof ADD_BCATEGORY_SUCCESS,
+    data: {
+        name: string,
+        Scategories: {
+            name: string,
+        }[],
+    },
+};
+interface AddBcategoryFailureAction {
+    type: typeof ADD_BCATEGORY_FAILURE,
+    error: any,
+};
+
+export interface AddScategoryRequestAction {
+    type: typeof ADD_SCATEGORY_REQUEST,
+    data: string,
+    order: number,
+    Bcategory: string,
+};
+interface AddScategorySuccessAction {
+    type: typeof ADD_SCATEGORY_SUCCESS,
+    data: {
+        name: string,
+    },
+    Bcategory: string,
+};
+interface AddScategoryFailureAction {
+    type: typeof ADD_SCATEGORY_FAILURE,
+    error: any
+}
+
+export interface GetBcategoryRequestAction {
+    type: typeof GET_BCATEGORY_REQUEST,
+};
+interface GetBcategorySuccessAction {
+    type: typeof GET_BCATEGORY_SUCCESS,
+    data: {
+        name: string,
+        Scategories: {
+            name: string,
+        }[],
+    }[],
+};
+interface GetBcategoryFailureAction {
+    type: typeof GET_BCATEGORY_FAILURE,
+    error: any,
+}
+
+export interface GetScategoryListRequestAction {
+    type: typeof GET_SCATEGORYLIST_REQUEST,
+};
+interface GetScategoryListSuccessAction {
+    type: typeof GET_SCATEGORYLIST_SUCCESS,
+    data: {
+        name: string,
+    }[],
+};
+interface GetScategoryListFailureAction {
+    type: typeof GET_SCATEGORYLIST_FAILURE,
+    error: any,
+};
+
+export interface ChangeBcategoryOrderRequestAction {
+    type: typeof CHANGE_BCATEGORY_ORDER_REQUEST,
+    data: {
+        bcategory1: string,
+        bcategory2: string,
+    },
+};
+interface ChangeBcategoryOrderSuccessAction {
+    type: typeof CHANGE_BCATEGORY_ORDER_SUCCESS,
+}
+interface ChangeBcategoryOrderFailureAction {
+    type: typeof CHANGE_BCATEGORY_ORDER_FAILURE,
+    error: any,
+};
+
+type BcategoryAction = 
+    | AddBcategoryRequestAction | AddBcategorySuccessAction | AddBcategoryFailureAction
+    | AddScategoryRequestAction | AddScategorySuccessAction | AddScategoryFailureAction
+    | GetBcategoryRequestAction | GetBcategorySuccessAction | GetBcategoryFailureAction
+    | GetScategoryListRequestAction | GetScategoryListSuccessAction | GetScategoryListFailureAction
+    | ChangeBcategoryOrderRequestAction | ChangeBcategoryOrderSuccessAction | ChangeBcategoryOrderFailureAction;
+
+export default (state = initialState, action: BcategoryAction): BcategoryState => {
+    return produce(state, (draft) => {
+        switch (action.type) {
+            case GET_BCATEGORY_REQUEST: {
+                draft.bcategory = [];
+                break;
+            }
+            case GET_BCATEGORY_SUCCESS: {
+                action.data.forEach((category) => {
+                    draft.bcategory.push(category);
+                });
+                break;
+            }
+            case GET_BCATEGORY_FAILURE: {
+                break;
+            }
+            case ADD_BCATEGORY_REQUEST: {
+                draft.isAddingBcategory = true;
+                break;
+            }
+            case ADD_BCATEGORY_SUCCESS: {
+                draft.bcategory.push(action.data);
+                draft.isAddingBcategory = false;
+                break;
+            }
+            case ADD_BCATEGORY_FAILURE: {
+                draft.isAddingBcategory = false;
+                break;
+            }
+            case ADD_SCATEGORY_REQUEST: {
+                break;
+            }
+            case ADD_SCATEGORY_SUCCESS: {
+                const index = draft.bcategory.findIndex(v => v.name === action.Bcategory);
+                draft.bcategory[index]?.Scategories.push(action.data);
+                break;
+            }
+            case ADD_SCATEGORY_FAILURE: {
+                break;
+            }
+            case GET_SCATEGORYLIST_REQUEST: {
+                draft.scategoryList = [];
+                break;
+            }
+            case GET_SCATEGORYLIST_SUCCESS: {
+                action.data.forEach(c => {
+                    draft.scategoryList.push(c);
+                });
+                break;
+            }
+            case GET_SCATEGORYLIST_FAILURE: {
+                break;
+            }
+            case CHANGE_BCATEGORY_ORDER_REQUEST: {
+                break;
+            }
+            case CHANGE_BCATEGORY_ORDER_SUCCESS: {
+                break;
+            }
+            case CHANGE_BCATEGORY_ORDER_FAILURE: {
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    });
+}

@@ -1,0 +1,25 @@
+express js에서 req.user가 틀렸다고 할 땐
+types/express에 index.d.ts에
+import User from '../../models/user';
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: User
+  }
+}
+를 넣는다.
+---------------------------------------------------
+react render 함수에 인자가 들어가는 경우
+const ... = useCallback(value => () => {
+
+});
+이런 식으로 만든다.
+----------------------------------------------------
+const blocksFromHTML = convertFromHTML(editing);
+    const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap,
+    );
+
+    const [editorState, setEditorState] = useState(() => EditorState.createWithContent(state));
+html을 editorState로 만드는 법이다. ContentState는 draft-js에서 export
