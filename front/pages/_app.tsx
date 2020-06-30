@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { useDispatch, useSelector } from 'react-redux';
 import withReduxSaga from 'next-redux-saga';
+import { Helmet } from 'react-helmet';
 
 import wrapper from '../store/makeStore';
 import AppLayout from '../components/AppLayout';
@@ -40,12 +41,31 @@ const App = ({ Component }: Props) => {
 
     return (
         <>
-            <Head>
-                <title>Kihat's Blog</title>
-                <meta charSet="utf-8"/>
-                <link ref='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.3.3/antd.css" />
-                <link ref='stylesheet' href="../prismjs/prism.css" />
-            </Head>
+            <Helmet
+                title="Kihat's Blog"
+                htmlAttributes={{ lang: 'ko' }}
+                meta={[{
+                    charSet: 'UTF-8',
+                }, {
+                    name: 'viewport',
+                    content: 'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
+                }, {
+                    name: 'description', content: 'Kihat의 Blog',
+                }, {
+                    name: 'og:title', content: 'Kihat\'s Blog',
+                }, {
+                    name: 'og:description', content: 'Kihat의 Blog',
+                }, {
+                    name: 'og:type', content: 'website',
+                }, {
+                    name: 'og:image', content: '',
+                }]}
+                link={[{
+                    rel: 'shortcut icon', href: '',
+                }, {
+                    rel: 'stylesheet', href: "https://cdnjs.cloudflare.com/ajax/libs/antd/4.3.3/antd.css"
+                }]}
+            />
             <AppLayout>
                 <Component/>
             </AppLayout>
