@@ -9,7 +9,7 @@ interface CommentData {
     createdAt: string,
 };
 
-type PostState = {
+export type PostState = {
     mainPosts: Post[];
     singlePost: Post,
     isAddingComment: boolean,

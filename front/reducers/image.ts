@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-interface ImageState {
+export interface ImageState {
     imageUrl: string,
 };
 

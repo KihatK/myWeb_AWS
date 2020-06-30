@@ -12,7 +12,7 @@ interface BookMarkType {
     key: string | null, 
 }
 
-type UserState = {
+export type UserState = {
     me: { 
         nickname: string, 
         admin: boolean, 

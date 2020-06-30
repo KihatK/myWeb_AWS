@@ -12,7 +12,7 @@ interface PostList {
     titles: string[]
 }
 
-type PostListState = {
+export type PostListState = {
     postList: PostList[],
 };
 

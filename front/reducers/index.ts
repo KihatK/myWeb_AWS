@@ -1,30 +1,37 @@
 import { combineReducers } from 'redux';
-import produce from 'immer';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import user from './user';
-import post from './post';
-import category from './category';
-import postlist from './postlist';
-import image from './image';
+import user, { UserState } from './user';
+import post, { PostState } from './post';
+import category, { CategoryState } from './category';
+import postlist, { PostListState } from './postlist';
+import image, { ImageState } from './image';
 
-const rootReducer = combineReducers({
-    index: (state: {} = {}, action) => {
-        switch (action.type) {
-            case HYDRATE: {
-                return { ...state, action };
-            }
-            default: {
-                return state;
-            }
+interface State {
+    user: UserState,
+    post: PostState,
+    category: CategoryState,
+    postlist: PostListState,
+    image: ImageState,
+};
+
+const rootReducer = (state: State, action: any) => {
+    switch (action.type) {
+        case HYDRATE: {
+            return action.payload;
         }
-    },
-    user,
-    post,
-    category,
-    postlist,
-    image,
-});
+        default: {
+            const combineReducer = combineReducers({
+                user,
+                post,
+                category,
+                postlist,
+                image,
+            });
+            return combineReducer(state, action);
+        }
+    }
+}
 
 export type RootState = ReturnType<typeof rootReducer>
 

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { useDispatch, useSelector } from 'react-redux';
-import withReduxSaga from 'next-redux-saga';
 import { Helmet } from 'react-helmet';
 
 import wrapper from '../store/makeStore';
@@ -33,12 +31,6 @@ const App = ({ Component }: Props) => {
         });
     }, [scategoryList]);
 
-    useEffect(() => {
-        dispatch({
-            type: LOAD_USER_REQUEST,
-        });
-    }, []);
-
     return (
         <>
             <Helmet
@@ -63,7 +55,7 @@ const App = ({ Component }: Props) => {
                 link={[{
                     rel: 'shortcut icon', href: '',
                 }, {
-                    rel: 'stylesheet', href: "https://cdnjs.cloudflare.com/ajax/libs/antd/4.3.3/antd.css"
+                    rel: 'stylesheet', href: "../node_modules/antd/dist/antd.css"
                 }]}
             />
             <AppLayout>
@@ -73,4 +65,4 @@ const App = ({ Component }: Props) => {
     );
 }
 
-export default wrapper.withRedux(withReduxSaga(App));
+export default wrapper.withRedux(App);

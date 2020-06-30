@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-type BcategoryState = {
+export type CategoryState = {
     bcategory: {
         name: string,
         Scategories: {
@@ -13,7 +13,7 @@ type BcategoryState = {
     }[],
 };
 
-export const initialState: BcategoryState = {
+export const initialState: CategoryState = {
     bcategory: [],
     isAddingBcategory: false,
     scategoryList: [],
@@ -122,14 +122,14 @@ interface ChangeBcategoryOrderFailureAction {
     error: any,
 };
 
-type BcategoryAction = 
+type CategoryAction = 
     | AddBcategoryRequestAction | AddBcategorySuccessAction | AddBcategoryFailureAction
     | AddScategoryRequestAction | AddScategorySuccessAction | AddScategoryFailureAction
     | GetBcategoryRequestAction | GetBcategorySuccessAction | GetBcategoryFailureAction
     | GetScategoryListRequestAction | GetScategoryListSuccessAction | GetScategoryListFailureAction
     | ChangeBcategoryOrderRequestAction | ChangeBcategoryOrderSuccessAction | ChangeBcategoryOrderFailureAction;
 
-export default (state = initialState, action: BcategoryAction): BcategoryState => {
+export default (state = initialState, action: CategoryAction): CategoryState => {
     return produce(state, (draft) => {
         switch (action.type) {
             case GET_BCATEGORY_REQUEST: {
