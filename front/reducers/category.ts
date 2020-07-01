@@ -1,12 +1,14 @@
 import produce from 'immer';
 
-export type CategoryState = {
-    bcategory: {
-        name: string,
-        Scategories: {
-            name: string
-        }[],
+export interface BcategoryType {
+    name: string,
+    Scategories: {
+        name: string
     }[],
+}
+
+export type CategoryState = {
+    bcategory: BcategoryType[],
     isAddingBcategory: boolean,
     scategoryList: {
         name: string,

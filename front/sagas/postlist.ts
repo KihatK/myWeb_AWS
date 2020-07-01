@@ -6,7 +6,7 @@ import {
 } from '../reducers/postlist';
 
 function getCategoryPostsAPI(scategory: string) {
-    return axios.get(`/posts/${scategory}`);
+    return axios.get(`/posts/${encodeURIComponent(scategory)}`);
 }
 
 function* getCategoryPosts(action: GetCategoryPostsRequestAction) {

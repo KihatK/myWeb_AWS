@@ -33,7 +33,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:scategory', async (req, res, next) => {
     try {
         const posts = await Post.findAll({
-            where: { scategory: req.params.scategory },
+            where: { scategory: decodeURIComponent(req.params.scategory) },
             order: [['createdAt', 'DESC']],
         });
         return res.json(posts);

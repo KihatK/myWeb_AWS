@@ -5,7 +5,8 @@ import { Drawer, Button } from 'antd';
 
 import CategoryList from './CategoryList';
 import { RootState } from '../reducers';
-import { ADD_BCATEGORY_REQUEST } from '../reducers/category';
+import { ADD_BCATEGORY_REQUEST, BcategoryType } from '../reducers/category';
+import { StyledButton } from '../style/containers/CategoryDrawer';
 
 interface Props {
     visible: boolean;
@@ -38,12 +39,12 @@ const CategoryDrawer = ({ visible, onClose }: Props) => {
             <Link href="/">
                 <a>Home</a>
             </Link>
-            {bcategory.map(c => <CategoryList key={c.name} category={c} />)}
+            {bcategory.map((c: BcategoryType) => <CategoryList key={c.name} category={c} />)}
             {admin && 
                 (
-                    <Button onClick={addCategory} loading={isAddingBcategory} style={{ position: 'absolute', bottom: '10px', right: '5px' }}>
+                    <StyledButton onClick={addCategory} loading={isAddingBcategory}>
                     +
-                    </Button>
+                    </StyledButton>
                 )
             }
         </Drawer>

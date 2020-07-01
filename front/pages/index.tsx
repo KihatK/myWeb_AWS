@@ -1,37 +1,31 @@
-import React, { useEffect } from 'react';
-import { Store } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import PostCard from '../components/PostCard';
-import wrapper from '../store/makeStore';
+import PostCard from '../containers/PostCard';
+import wrapper, { IStore } from '../store/makeStore';
 import { RootState } from '../reducers';
 import { GET_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 import { GET_BCATEGORY_REQUEST } from '../reducers/category';
 import { Post } from '../util/type';
+import { StyledDiv } from '../style/pages/home';
 
 const Home = () => {
-    const dispatch = useDispatch();
-
     const mainPosts = useSelector((state: RootState) => state.post.mainPosts);
     
     return (
         <>
             {mainPosts.map((v: Post) => <PostCard key={v.createdAt} post={v} />)}
-            <div style={{ textAlign: 'center' }}>
+            <StyledDiv>
                 <br/>
                 Made by Kihat
                 <br/>
                 &nbsp;
-            </div>
+            </StyledDiv>
         </>
     );
-};
-
-interface IStore extends Store {
-    sagaTask: any,
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async ({ store, req }) => {
@@ -52,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async ({ store, req
         type: GET_POSTS_REQUEST,
     });
     store.dispatch(END);
-    await (store as IStore).sagaTask.toPromise();
+    await (store as IStore).sagaTask?.toPromise();
 });
 
 export default Home;

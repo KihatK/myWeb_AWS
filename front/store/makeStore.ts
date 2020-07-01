@@ -6,7 +6,7 @@ import createSagaMiddleware, { Task } from 'redux-saga';
 import reducer, { RootState } from '../reducers';
 import rootSaga from '../sagas';
 
-interface IStore extends Store {
+export interface IStore extends Store {
     sagaTask?: Task
 }
 

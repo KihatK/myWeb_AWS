@@ -6,28 +6,16 @@ import styled from 'styled-components';
 import Prismjs from '../prismjs/prism';
 import moment from 'moment';
 
-import CommentList from './CommentList';
+import CommentList from '../components/CommentList';
 import { PostProps } from '../util/type';
 import { RootState } from '../reducers';
-import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST } from '../reducers/user';
+import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST, BookMarkType } from '../reducers/user';
+import {
+    ContentDiv, DragA, StyledCard, StyledDivScategory, StyledBookFilled, StyledBookOutlined, StyledNoneDiv,
+    StyledDivTitle, StyledAvatar, StyledSpanNickname, StyledSpanTime, StyledButtonDelete, StyledButtonEdit, StyledCommentDiv,
+} from '../style/containers/PostCard';
 
 moment.locale('ko');
-
-const ContentDiv = styled.div`
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-`;
-const DragA = styled.a`
-    && {
-        position: relative;
-        top: 15px;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-    }
-`;
 
 const PostCard = ({ post }: PostProps) => {
     const dispatch = useDispatch();
@@ -61,34 +49,33 @@ const PostCard = ({ post }: PostProps) => {
     }, []);
 
     return (
-        <Card
-            style={{ marginTop: '5px', position: 'relative' }}
+        <StyledCard
             title={
                 <div>
-                    <div style={{ color: '#8A837E' }}>
+                    <StyledDivScategory>
                         {post.scategory}
-                    </div>
+                    </StyledDivScategory>
                     <Popover content={<div>북마크</div>}>
                         {nickname
-                            ? BookMarked?.find(p => p.uuid === post.uuid)
-                                ? <BookFilled onClick={unbookmarkPost(post.uuid)} style={{ position: 'absolute', top: '20px', right: '20px' }}/>
-                                : <BookOutlined onClick={bookmarkPost(post.uuid)} style={{ position: 'absolute', top: '20px', right: '20px' }}/>
-                            : <div style={{ display: 'none' }}></div> 
+                            ? BookMarked?.find((p: BookMarkType) => p.uuid === post.uuid)
+                                ? <StyledBookFilled onClick={unbookmarkPost(post.uuid)}/>
+                                : <StyledBookOutlined onClick={bookmarkPost(post.uuid)}/>
+                            : <StyledNoneDiv></StyledNoneDiv> 
                         }
                     </Popover>
-                    <div style={{ fontSize: '36px' }}>
+                    <StyledDivTitle>
                         {post.title}
-                    </div>
+                    </StyledDivTitle>
                     <br />
-                    <Avatar style={{ position: 'relative', top: '5px' }}>
+                    <StyledAvatar>
                         {post.User.nickname[0]}
-                    </Avatar>
-                    <span style={{ color: '#8A837E', position: 'relative', top: '7px', left: '10px' }}>
+                    </StyledAvatar>
+                    <StyledSpanNickname>
                         {post.User.nickname}
-                    </span>
-                    <span style={{ color: '#8A837E', position: 'relative', top: '7px', left: '20px' }}>
+                    </StyledSpanNickname>
+                    <StyledSpanTime>
                         {moment(post.createdAt).format('YYYY-MM-DD HH:mm')}
-                    </span>
+                    </StyledSpanTime>
                 </div>
             }
             bordered={true}
@@ -100,15 +87,15 @@ const PostCard = ({ post }: PostProps) => {
                 <u>댓글</u>
             </DragA>
             {toggleComment 
-                ? <div style={{ position: 'relative', top: '20px' }}>
+                ? <StyledCommentDiv>
                     <CommentList post={post}/>
                     <div>
                         &nbsp;
                     </div>
-                </div>
+                </StyledCommentDiv>
                 : null
             }
-        </Card>
+        </StyledCard>
     );
 }
 

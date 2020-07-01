@@ -6,6 +6,7 @@ import { SettingOutlined, LogoutOutlined, BookOutlined, ProfileOutlined } from '
 
 import { RootState } from '../reducers';
 import { LOG_OUT_REQUEST } from '../reducers/user';
+import { StyledDiv, StyledAvatar, StyledBook, StyledProfile, StyledLogout, StyledSpan } from '../style/containers/UserProfile';
 
 const UserProfile = () => {
     const dispatch = useDispatch();
@@ -27,24 +28,24 @@ const UserProfile = () => {
     }, []);
 
     return (
-        <div style={{ verticalAlign: 'middle', position: 'relative', top: '5px' }}>
-            <Avatar style={{ marginRight: '10px' }}>{nickname ? nickname[0] : null}</Avatar>
-            <span style={{ marginRight: '10px' }}>{`${nickname}님`}</span>
+        <StyledDiv>
+            <StyledAvatar>{nickname ? nickname[0] : null}</StyledAvatar>
+            <StyledSpan>{`${nickname}님`}</StyledSpan>
             <Popover content={<div>북마크</div>}>
-                <BookOutlined onClick={clickBookmarks} style={{ marginRight: '10px' }} />
+                <StyledBook onClick={clickBookmarks}/>
             </Popover>
             <Popover content={<div>설정</div>}>
                 <SettingOutlined />
             </Popover>
             {admin && (
                 <Popover content={<div>카테고리 순서</div>}>
-                    <ProfileOutlined onClick={clickCategoryOrder} style={{ marginLeft: '10px' }} />
+                    <StyledProfile onClick={clickCategoryOrder}/>
                 </Popover>
             )}
             <Popover content={<div>로그아웃</div>}>
-                <LogoutOutlined onClick={clickLogout} style={{ marginLeft: '10px' }} />
+                <StyledLogout onClick={clickLogout}/>
             </Popover>
-        </div>
+        </StyledDiv>
     );
 };
 

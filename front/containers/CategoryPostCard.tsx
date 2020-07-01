@@ -3,34 +3,21 @@ import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Avatar, Popover } from 'antd';
 import { BookOutlined, BookFilled } from '@ant-design/icons';
-import styled from 'styled-components';
 import moment from 'moment';
 import Prismjs from '../prismjs/prism';
 
-import CommentList from './CommentList';
+import CommentList from '../components/CommentList';
 import CommentForm from './CommentForm';
 import { PostProps } from '../util/type';
 import { RootState } from '../reducers';
 import { REMOVE_POST_REQUEST } from '../reducers/post';
-import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST } from '../reducers/user';
+import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST, BookMarkType } from '../reducers/user';
+import {
+    ContentDiv, DragA, StyledCard, StyledDivScategory, StyledBookFilled, StyledBookOutlined, StyledNoneDiv,
+    StyledDivTitle, StyledAvatar, StyledSpanNickname, StyledSpanTime, StyledButtonDelete, StyledButtonEdit, StyledCommentDiv,
+} from '../style/containers/PostCard';
 
 moment.locale('ko');
-
-const ContentDiv = styled.div`
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-`;
-const DragA = styled.a`
-    && {
-        position: relative;
-        top: 15px;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-    }
-`;
 
 const CategoryPostCard = ({ post }: PostProps) => {
     const dispatch = useDispatch();
@@ -92,34 +79,33 @@ const CategoryPostCard = ({ post }: PostProps) => {
     }, [isRemovedPost]);
 
     return (
-        <Card
-            style={{ marginTop: '5px', position: 'relative' }}
+        <StyledCard
             title={
                 <div>
-                    <div style={{ color: '#8A837E' }}>
+                    <StyledDivScategory>
                         {post.scategory}
-                    </div>
+                    </StyledDivScategory>
                     <Popover content={<div>북마크</div>}>
                         {nickname
-                            ? BookMarked?.find(p => p.uuid === post.uuid)
-                                ? <BookFilled onClick={unbookmarkPost(post.uuid)} style={{ position: 'absolute', top: '20px', right: '20px' }}/>
-                                : <BookOutlined onClick={bookmarkPost(post.uuid)} style={{ position: 'absolute', top: '20px', right: '20px' }}/>
-                            : <div style={{ display: 'none' }}></div> 
+                            ? BookMarked?.find((p: BookMarkType) => p.uuid === post.uuid)
+                                ? <StyledBookFilled onClick={unbookmarkPost(post.uuid)}/>
+                                : <StyledBookOutlined onClick={bookmarkPost(post.uuid)}/>
+                            : <StyledNoneDiv></StyledNoneDiv> 
                         }
                     </Popover>
-                    <div style={{ fontSize: '36px' }}>
+                    <StyledDivTitle>
                         {post.title}
-                    </div>
+                    </StyledDivTitle>
                     <br />
-                    <Avatar style={{ position: 'relative', top: '5px' }}>
+                    <StyledAvatar>
                         {post.User.nickname[0]}
-                    </Avatar>
-                    <span style={{ color: '#8A837E', position: 'relative', top: '7px', left: '10px' }}>
+                    </StyledAvatar>
+                    <StyledSpanNickname>
                         {post.User.nickname}
-                    </span>
-                    <span style={{ color: '#8A837E', position: 'relative', top: '7px', left: '20px' }}>
+                    </StyledSpanNickname>
+                    <StyledSpanTime>
                         {moment(post.createdAt).format('YYYY-MM-DD HH:mm')}
-                    </span>
+                    </StyledSpanTime>
                 </div>
             }
             bordered={true}
@@ -130,19 +116,19 @@ const CategoryPostCard = ({ post }: PostProps) => {
             <DragA onClick={clickToggleComment}>
                 <u>댓글</u>
             </DragA>
-            <button onClick={removePost(post.uuid)} style={{ position: 'absolute', bottom: '7px', right: '7px' }}>삭제</button>
-            <button onClick={editPost(post.uuid)} style={{ position: 'absolute', bottom: '7px', right: '57px' }}>수정</button>
+            <StyledButtonDelete onClick={removePost(post.uuid)}>삭제</StyledButtonDelete>
+            <StyledButtonEdit onClick={editPost(post.uuid)}>수정</StyledButtonEdit>
             {toggleComment 
-                ? <div style={{ position: 'relative', top: '20px' }}>
+                ? <StyledCommentDiv>
                     <CommentForm post={post}/>
                     <CommentList post={post}/>
                     <div>
                         &nbsp;
                     </div>
-                </div>
+                </StyledCommentDiv>
                 : null
             }
-        </Card>
+        </StyledCard>
     );
 }
 

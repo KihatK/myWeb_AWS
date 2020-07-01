@@ -1,7 +1,7 @@
 import produce from 'immer';
 import moment from 'moment';
 
-interface BookMarkType {
+export interface BookMarkType {
     id: number,
     uuid: string,
     title: string,

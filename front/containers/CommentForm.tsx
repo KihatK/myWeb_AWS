@@ -5,6 +5,7 @@ import { Form, Input, Button } from 'antd';
 import { ADD_COMMENT_REQUEST } from '../reducers/post';
 import { RootState } from '../reducers';
 import { PostProps } from '../util/type';
+import { StyledButton } from '../style/containers/CommentForm';
 
 const CommentForm = ({ post }: PostProps) => {
     const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const CommentForm = ({ post }: PostProps) => {
     return (
         <Form onFinish={finishComment}>
             <Input.TextArea rows={3} value={comment} onChange={changeComment} />
-            <Button htmlType="submit" loading={isAddingComment} style={{ float: 'right' }}>입력</Button>
+            <StyledButton htmlType="submit" loading={isAddingComment}>입력</StyledButton>
         </Form>
     );
 }

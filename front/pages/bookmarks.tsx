@@ -1,52 +1,69 @@
 import React from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
+import { END } from 'redux-saga';
 import { Table } from 'antd';
+import axios from 'axios';
 
+import wrapper, { IStore } from '../store/makeStore';
 import { RootState } from '../reducers';
+import { LOAD_USER_REQUEST } from '../reducers/user';
+import { GET_BCATEGORY_REQUEST } from '../reducers/category';
+import { StyledH1, StyledTable, StyledDiv } from '../style/pages/bookmarks';
 
 const bookmarks = () => {
     const BookMarked = useSelector((state: RootState) => state.user.me?.BookMarked);
 
-    const columns: { title: string, dataIndex: string, key: string, render?: (text: string) => JSX.Element }[] = [
-        {
-            title: '제목',
-            dataIndex: 'titles',
-            key: 'titles',
-            render: (text) => 
-                <Link href="/post/[id]" as={`/post/${text[1]}`}>
-                    <a>{text[0]}</a>
-                </Link>,
-        },
-        {
-            title: '카테고리',
-            dataIndex: 'scategory',
-            key: 'scategory',
-        },
-        {
-            title: '날짜',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-        },
-        {
-            title: '조회수',
-            dataIndex: 'view',
-            key: 'view',
-        },
-    ];
+    const columns: { title: string, dataIndex: string, key: string, render?: (text: string) => JSX.Element }[] = [{
+        title: '제목',
+        dataIndex: 'titles',
+        key: 'titles',
+        render: (text) =>
+            <Link href="/post/[id]" as={`/post/${text[1]}`}>
+                <a>{text[0]}</a>
+            </Link>,
+    }, {
+        title: '카테고리',
+        dataIndex: 'scategory',
+        key: 'scategory',
+    }, {
+        title: '날짜',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+    }, {
+        title: '조회수',
+        dataIndex: 'view',
+        key: 'view',
+    }];
 
     return (
         <>
-            <h1 style={{ marginTop: '5px', textAlign: 'center' }}>북마크한 글들</h1>
-            <Table style={{ marginTop: '5px' }} columns={columns} dataSource={BookMarked} />
-            <div style={{ textAlign: 'center' }}>
+            <StyledH1>북마크한 글들</StyledH1>
+            <StyledTable columns={columns} dataSource={BookMarked} />
+            <StyledDiv>
                 <br/>
                 Made by Kihat
                 <br/>
                 &nbsp;
-            </div>
+            </StyledDiv>
         </>
     );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async ({ store, req }) => {
+    const cookie = req ? req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+    }
+    store.dispatch({
+        type: LOAD_USER_REQUEST,
+    });
+    store.dispatch({
+        type: GET_BCATEGORY_REQUEST,
+    });
+    store.dispatch(END);
+    await (store as IStore).sagaTask?.toPromise();
+});
 
 export default bookmarks;

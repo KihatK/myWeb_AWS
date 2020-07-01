@@ -2,9 +2,14 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button, Card } from 'antd';
+import axios from 'axios';
 
+import wrapper, {IStore } from '../store/makeStore';
 import { RootState } from '../reducers';
-import { SIGN_UP_REQUEST } from '../reducers/user';
+import { SIGN_UP_REQUEST, LOAD_USER_REQUEST } from '../reducers/user';
+import { GET_BCATEGORY_REQUEST } from '../reducers/category';
+import { END } from 'redux-saga';
+import { StyledCard, StyledDiv } from '../style/pages/signup';
 
 const validateMessages = {
     required: '${label}를 입력하셔야 합니다',
@@ -87,7 +92,7 @@ const SignUp = () => {
     }, [isSignedUp]);
 
     return (
-        <Card style={{ marginTop: '5px' }}>
+        <StyledCard>
             <h1>회원가입하기</h1>
             <br />
             <Form validateMessages={validateMessages} onFinish={finishSignup}>
@@ -102,17 +107,33 @@ const SignUp = () => {
                 </Form.Item>
                 <Form.Item label="비밀번호 확인">
                     <Input value={passwordCheck} onChange={changePasswordCheck} type="password" />
-                    {passwordError && <div style={{ color: 'red' }}>비밀번호가 같지 않습니다.</div>}
+                    {passwordError && <StyledDiv>비밀번호가 같지 않습니다.</StyledDiv>}
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" loading={isSigningUp}>
                         회원가입하기
                     </Button>
                 </Form.Item>
-                {isSigningupError && <div style={{ color: 'red' }}>{isSigningupError}</div>}
+                {isSigningupError && <StyledDiv>{isSigningupError}</StyledDiv>}
             </Form>
-        </Card>
+        </StyledCard>
     );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(async ({ store, req }) => {
+    const cookie = req ? req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+    }
+    store.dispatch({
+        type: LOAD_USER_REQUEST,
+    });
+    store.dispatch({
+        type: GET_BCATEGORY_REQUEST,
+    });
+    store.dispatch(END);
+    await (store as IStore).sagaTask?.toPromise();
+});
 
 export default SignUp;

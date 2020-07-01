@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Router from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button } from 'antd';
 
@@ -34,53 +34,8 @@ import createPrismPlugin from 'draft-js-prism-plugin';
 import { stateToHTML } from 'draft-js-export-html'
 
 import ImageAdd from '../draftjs/ImageAddHooks';
-import { ADD_POST_REQUEST } from '../reducers/post';
-
-const HeadBtnDiv = styled.div`
-    && {
-        display: inline-block;
-    }
-    & > button {
-        background: #fbfbfb;
-        color: #888;
-        font-size: 18px;
-        border: 0;
-        padding-top: 5px;
-        vertical-align: bottom;
-        height: 34px;
-        width: 36px;
-    }
-    & > button:hover,
-    & > button:focus {
-        background: #f3f3f3;
-    }
-`;
-const EditorStyleDiv = styled.div`
-    && .DraftEditor-root {
-        min-height: 400px;
-        margin-bottom: 100px;
-    }
-    && {
-        box-sizing: border-box;
-        border: 1px solid #ddd;
-        cursor: text;
-        padding: 16px;
-        border-radius: 2px;
-        margin-bottom: 2em;
-        box-shadow: inset 0px 1px 8px -3px #ABABAB;
-        background: #fefefe;
-    }
-`;
-
-const emptyContent = convertFromRaw({
-    entityMap: {},
-    blocks: [{
-        text: '',
-        key: 'foo',
-        type: 'unstyled',
-        entityRanges: [],
-    }],
-});
+import { EDIT_POST_REQUEST } from '../reducers/post';
+import { StyledDiv, StyledButton, HeadBtnDiv, EditorStyleDiv } from '../style/containers/DraftEditor';
 
 const toolbarPlugin = createToolbarPlugin();
 const { Toolbar } = toolbarPlugin;
@@ -144,13 +99,17 @@ const HeadlinesButton = (props) => {
     );
 }
 
-const DraftEditor = ({ nickname, title, category, language }) => {
+const DraftEditor = ({ nickname, title, category, language, editing, uuid }) => {
     const dispatch = useDispatch();
-    const { isAddedPost } = useSelector(state => state.post);
+    const blocksFromHTML = convertFromHTML(editing);
+    const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap,
+    );
 
-    const [editorState, setEditorState] = useState(() => EditorState.createWithContent(emptyContent));
+    const [editorState, setEditorState] = useState(() => EditorState.createWithContent(state));
+    
     const editor = useRef();
-    const countRef = useRef(false);
 
     //커멘드 사용 허용
     const handleKeyCommand = useCallback((command, editorState) => {
@@ -229,13 +188,14 @@ const DraftEditor = ({ nickname, title, category, language }) => {
         const inlineStyles = exporter(editorState);
         const html = stateToHTML(editorState.getCurrentContent(), { inlineStyles });
         dispatch({
-            type: ADD_POST_REQUEST,
+            type: EDIT_POST_REQUEST,
             data: {
                 title,
                 nickname,
                 content: html,
                 scategory: category,
                 language,
+                uuid,
             },
         });
     }, [editorState]);
@@ -266,21 +226,9 @@ const DraftEditor = ({ nickname, title, category, language }) => {
         }
     }, [editorState]);
 
-    useEffect(() => {
-        if (!countRef.current) {
-            countRef.current = true;
-            return;
-        }
-        else {
-            if (isAddedPost) {
-                Router.push('/');
-            }
-        }
-    }, [isAddedPost]);
-
     return (
         <>
-            <div style={{ flex: '1 0 25%' }}>
+            <StyledDiv>
                 <button
                     onClick={removeFontSize}
                 >
@@ -301,7 +249,7 @@ const DraftEditor = ({ nickname, title, category, language }) => {
                 <select onChange={e => toggleTextTransform(e.target.value)}>
                     {options(['uppercase', 'capitalize', 'lowercase'])}
                 </select>
-            </div>
+            </StyledDiv>
             <EditorStyleDiv>
                 <Editor
                     placeholder="Write something!"
@@ -344,7 +292,7 @@ const DraftEditor = ({ nickname, title, category, language }) => {
                     }
                 </Toolbar>
             </EditorStyleDiv>
-            <Button onClick={clickPost} style={{ float: 'right', marginBottom: '20px' }}>글쓰기</Button>
+            <StyledButton onClick={clickPost}>수정</StyledButton>
         </>
     );
 }

@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Row, Col, Menu } from 'antd';
 import { MenuOutlined } from '@ant-design/icons'
 
-import CategoryDrawer from './CategoryDrawer';
-import UserProfile from './UserProfile';
+import CategoryDrawer from '../containers/CategoryDrawer';
+import UserProfile from '../containers/UserProfile';
 import { RootState } from '../reducers';
 
 interface Props {

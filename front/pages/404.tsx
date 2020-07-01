@@ -1,3 +1,5 @@
+import { StyledH1 } from '../style/pages/404';
+
 export default function Custom404() {
-    return <h1 style={{ textAlign: 'center' }}>404 - Page Not Found</h1>
+    return <StyledH1>404 - Page Not Found</StyledH1>
 }

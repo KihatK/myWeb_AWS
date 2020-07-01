@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Button, Select } from 'antd';
 
 import { RootState } from '../reducers';
-import { CHANGE_BCATEGORY_ORDER_REQUEST } from '../reducers/category';
+import { CHANGE_BCATEGORY_ORDER_REQUEST, BcategoryType } from '../reducers/category';
 
 const BcategoryOrder = () => {
     const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const BcategoryOrder = () => {
                     defaultValue={{ key: bcategory1 }}
                     onChange={changeBcategory1}
                 >
-                    {bcategory.map(c => (
+                    {bcategory.map((c: BcategoryType) => (
                         <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
                     ))}
                 </Select>
@@ -49,7 +49,7 @@ const BcategoryOrder = () => {
                     defaultValue={{ key: bcategory2 }}
                     onChange={changeBcategory2}
                 >
-                    {bcategory.map(c => (
+                    {bcategory.map((c: BcategoryType) => (
                         <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
                     ))}
                 </Select>

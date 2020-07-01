@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Router, { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { END } from 'redux-saga';
 import { Input, Select } from 'antd';
+import axios from 'axios';
 
-import DraftEditorEdit from '../../components/DraftEditorEdit';
+import DraftEditorEdit from '../../containers/DraftEditorEdit';
+import wrapper, { IStore } from '../../store/makeStore';
 import { RootState } from '../../reducers';
+import { LOAD_USER_REQUEST } from '../../reducers/user';
+import { GET_BCATEGORY_REQUEST, GET_SCATEGORYLIST_REQUEST } from '../../reducers/category';
+import { GET_POST_REQUEST } from '../../reducers/post';
+import { StyledInput } from '../../style/pages/editid';
 
 const Id = () => {
     const router = useRouter();
@@ -43,19 +50,19 @@ const Id = () => {
 
     return (
         <>
-            <Input placeholder="제목을 입력하세요" value={title} onChange={changeTitle} style={{ marginTop: '5px' }} />
+            <StyledInput placeholder="제목을 입력하세요" value={title} onChange={changeTitle} />
             <Select
-                style={{ width: '1012px' }}
+                style={{ width: '1000px' }}
                 labelInValue
                 defaultValue={{ key: category }}
                 onChange={changeCategory}
             >
-                {scategoryList.map(c => (
+                {scategoryList.map((c: { name: string }) => (
                     <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
                 ))}
             </Select>
             <Select
-                style={{ width: '1012px' }}
+                style={{ width: '1000px' }}
                 labelInValue
                 defaultValue={{ key: language }}
                 onChange={changeLanguage}
@@ -69,5 +76,28 @@ const Id = () => {
         </>
     );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async ({ store, req, params }) => {
+    const cookie = req ? req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+    }
+    store.dispatch({
+        type: LOAD_USER_REQUEST,
+    });
+    store.dispatch({
+        type: GET_BCATEGORY_REQUEST,
+    });
+    store.dispatch({
+        type: GET_SCATEGORYLIST_REQUEST,
+    });
+    store.dispatch({
+        type: GET_POST_REQUEST,
+        data: params?.id,
+    });
+    store.dispatch(END);
+    await (store as IStore).sagaTask?.toPromise();
+});
 
 export default Id;

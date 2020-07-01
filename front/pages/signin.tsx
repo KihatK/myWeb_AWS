@@ -2,10 +2,15 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { END } from 'redux-saga';
 import { Form, Input, Button, Card } from 'antd';
+import axios from 'axios';
 
+import wrapper, { IStore } from '../store/makeStore';
 import { RootState } from '../reducers';
-import { LOG_IN_REQUEST } from '../reducers/user';
+import { LOG_IN_REQUEST, LOAD_USER_REQUEST } from '../reducers/user';
+import { GET_BCATEGORY_REQUEST } from '../reducers/category';
+import { StyledCard, StyledA, StyledDiv } from '../style/pages/signin';
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -45,8 +50,8 @@ const SignIn = () => {
     }, [isLoggedIn]);
 
     return (
-        <Card style={{ marginTop: '5px' }}>
-            <h1 style={{ textAlign: 'center' }}>로그인하기</h1>
+        <StyledCard>
+            <h1>로그인하기</h1>
             <br/>
             <Form onFinish={finishLogin}>
                 <Form.Item
@@ -56,7 +61,6 @@ const SignIn = () => {
                 >
                     <Input value={id} onChange={changeId} />
                 </Form.Item>
-
                 <Form.Item
                     label="Password"
                     name="password"
@@ -69,13 +73,29 @@ const SignIn = () => {
                         로그인
                     </Button>
                     <Link href="/signup">
-                        <a style={{ float: 'right' }}>회원가입하기</a>
+                        <StyledA>회원가입하기</StyledA>
                     </Link>
                 </Form.Item>
-                {isLoggingInError && <div style={{ color: 'red' }}>{isLoggingInError}</div>}
+                {isLoggingInError && <StyledDiv>{isLoggingInError}</StyledDiv>}
             </Form>
-        </Card>
+        </StyledCard>
     );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(async ({ req, store }) => {
+    const cookie = req ? req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+    }
+    store.dispatch({
+        type: LOAD_USER_REQUEST,
+    });
+    store.dispatch({
+        type: GET_BCATEGORY_REQUEST,
+    });
+    store.dispatch(END);
+    await (store as IStore).sagaTask?.toPromise();
+});
 
 export default SignIn;

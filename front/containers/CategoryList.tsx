@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { RootState } from '../reducers';
-import { ADD_SCATEGORY_REQUEST } from '../reducers/category';
+import { ADD_SCATEGORY_REQUEST, BcategoryType } from '../reducers/category';
+import { DragA, StyledP } from '../style/containers/CategoryList';
 
 interface Props {
     category: {
@@ -13,14 +14,6 @@ interface Props {
     }
 };
 
-const DragA = styled.a`
-    && {
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-    }
-`;
-
 const CategoryList = ({ category }: any) => {
     const [categoryOpen, setCategoryOpen] = useState(false);
 
@@ -28,7 +21,7 @@ const CategoryList = ({ category }: any) => {
     const { bcategory } = useSelector((state: RootState) => state.category);
     const admin = useSelector((state: RootState) => state.user.me?.admin);
 
-    const bcategoryIndex = bcategory.findIndex(v => v.name === category.name);
+    const bcategoryIndex = bcategory.findIndex((v: BcategoryType) => v.name === category.name);
 
     const clickCategory = useCallback(() => {
         if (categoryOpen) {
@@ -50,13 +43,13 @@ const CategoryList = ({ category }: any) => {
 
     return (
         <>
-            <DragA onClick={clickCategory}><p style={{ fontSize: '25px', marginBottom: '0px' }}>
+            <DragA onClick={clickCategory}><StyledP>
                 {category.name}
-            </p></DragA>
+            </StyledP></DragA>
             {
                 categoryOpen &&
                 <div>
-                    {bcategory[bcategoryIndex]?.Scategories?.map(c => 
+                    {bcategory[bcategoryIndex]?.Scategories?.map((c: { name: string }) => 
                         <div key={c.name}>
                             &nbsp;&nbsp;
                             <Link href="/category/[category]" as={`/category/${c.name.replace(/\s/gi, "")}`}>
