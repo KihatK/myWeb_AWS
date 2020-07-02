@@ -1,16 +1,7 @@
 import produce from 'immer';
 import moment from 'moment';
 
-interface PostList {
-    key: string,
-    uuid: string,
-    id: number,
-    title: string,
-    scategory: string,
-    createdAt: string,
-    view: number,
-    titles: string[]
-}
+import { PostList } from '../util/postlist';
 
 export type PostListState = {
     postList: PostList[],

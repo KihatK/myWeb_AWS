@@ -1,23 +1,10 @@
 import produce from 'immer';
 import moment from 'moment';
 
-export interface BookMarkType {
-    id: number,
-    uuid: string,
-    title: string,
-    scategory: string,
-    view: number,
-    createdAt: string,
-    titles: string[],
-    key: string | null, 
-}
+import { BookMarkType, MeType, SignupData, LoginData } from '../util/user';
 
 export type UserState = {
-    me: { 
-        nickname: string, 
-        admin: boolean, 
-        BookMarked: BookMarkType[],
-    } | null,
+    me: MeType | null,
     isLoggingIn: boolean,
     isLoggedIn: boolean,
     isLoggingInError: string,
@@ -60,11 +47,6 @@ export const UNBOOKMARK_POST_REQUEST = 'UNBOOKMARK_POST_REQUEST';
 export const UNBOOKMARK_POST_SUCCESS = 'UNBOOKMARK_POST_SUCCESS';
 export const UNBOOKMARK_POST_FAILURE = 'UNBOOKMARK_POST_FAILURE';
 
-export interface SignupData {
-    userId: string,
-    nickname: string,
-    password: string,
-};
 export interface SignupRequestAction {
     type: typeof SIGN_UP_REQUEST,
     data: SignupData,
@@ -77,21 +59,13 @@ interface SignupFailureAction {
     error: any,
 };
 
-export interface LoginData {
-    userId: string,
-    password: string,
-};
 export interface LoginRequestAction {
     type: typeof LOG_IN_REQUEST,
     data: LoginData,
 }
 interface LoginSuccessAction {
     type: typeof LOG_IN_SUCCESS,
-    data: {
-        nickname: string,
-        admin: boolean,
-        BookMarked: BookMarkType[],
-    },
+    data: MeType,
 };
 interface LoginFailureAction {
     type: typeof LOG_IN_FAILURE,
@@ -114,11 +88,7 @@ interface LoadUserRequestAction {
 };
 interface LoadUserSuccessAction {
     type: typeof LOAD_USER_SUCCESS,
-    data: {
-        nickname: string,
-        admin: boolean,
-        BookMarked: BookMarkType[],
-    },
+    data: MeType,
 };
 interface LoadUserFailureAction {
     type: typeof LOAD_USER_FAILURE,
@@ -144,14 +114,7 @@ export interface UnbookmarkPostRequestAction {
 };
 interface UnbookmarkPostSuccessAction {
     type: typeof UNBOOKMARK_POST_SUCCESS,
-    data: {
-        id: number,
-        uuid: string,
-        title: string,
-        scategory: string,
-        view: number,
-        createdAt: string,
-    },
+    data: BookMarkType,
 };
 interface UnbookmarkPostFailureAction {
     type: typeof UNBOOKMARK_POST_FAILURE,

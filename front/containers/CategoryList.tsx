@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { RootState } from '../reducers';
-import { ADD_SCATEGORY_REQUEST, BcategoryType } from '../reducers/category';
+import { ADD_SCATEGORY_REQUEST } from '../reducers/category';
 import { DragA, StyledP } from '../style/containers/CategoryList';
+import { BcategoryType } from '../util/category';
 
 interface Props {
     category: {

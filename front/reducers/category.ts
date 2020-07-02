@@ -1,18 +1,11 @@
 import produce from 'immer';
 
-export interface BcategoryType {
-    name: string,
-    Scategories: {
-        name: string
-    }[],
-}
+import { BcategoryType, ScategoryListType, ScategoriesType, ChangeBcategoryOrder } from '../util/category';
 
 export type CategoryState = {
     bcategory: BcategoryType[],
     isAddingBcategory: boolean,
-    scategoryList: {
-        name: string,
-    }[],
+    scategoryList: ScategoryListType[],
 };
 
 export const initialState: CategoryState = {
@@ -64,12 +57,7 @@ export interface AddBcategoryRequestAction {
 };
 interface AddBcategorySuccessAction {
     type: typeof ADD_BCATEGORY_SUCCESS,
-    data: {
-        name: string,
-        Scategories: {
-            name: string,
-        }[],
-    },
+    data: BcategoryType,
 };
 interface AddBcategoryFailureAction {
     type: typeof ADD_BCATEGORY_FAILURE,
@@ -84,9 +72,7 @@ export interface AddScategoryRequestAction {
 };
 interface AddScategorySuccessAction {
     type: typeof ADD_SCATEGORY_SUCCESS,
-    data: {
-        name: string,
-    },
+    data: ScategoriesType,
     Bcategory: string,
 };
 interface AddScategoryFailureAction {
@@ -99,12 +85,7 @@ export interface GetBcategoryRequestAction {
 };
 interface GetBcategorySuccessAction {
     type: typeof GET_BCATEGORY_SUCCESS,
-    data: {
-        name: string,
-        Scategories: {
-            name: string,
-        }[],
-    }[],
+    data: BcategoryType[],
 };
 interface GetBcategoryFailureAction {
     type: typeof GET_BCATEGORY_FAILURE,
@@ -116,9 +97,7 @@ export interface GetScategoryListRequestAction {
 };
 interface GetScategoryListSuccessAction {
     type: typeof GET_SCATEGORYLIST_SUCCESS,
-    data: {
-        name: string,
-    }[],
+    data: ScategoryListType[],
 };
 interface GetScategoryListFailureAction {
     type: typeof GET_SCATEGORYLIST_FAILURE,
@@ -127,10 +106,7 @@ interface GetScategoryListFailureAction {
 
 export interface ChangeBcategoryOrderRequestAction {
     type: typeof CHANGE_BCATEGORY_ORDER_REQUEST,
-    data: {
-        bcategory1: string,
-        bcategory2: string,
-    },
+    data: ChangeBcategoryOrder,
 };
 interface ChangeBcategoryOrderSuccessAction {
     type: typeof CHANGE_BCATEGORY_ORDER_SUCCESS,

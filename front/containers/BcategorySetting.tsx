@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, Select, Input, Form, Button } from 'antd';
 
 import { RootState } from '../reducers';
-import { EDIT_BCATEGORY_REQUEST, REMOVE_BCATEGORY_REQUEST, BcategoryType } from '../reducers/category';
+import { EDIT_BCATEGORY_REQUEST, REMOVE_BCATEGORY_REQUEST } from '../reducers/category';
 import { StyledCard } from '../style/containers/CategorySetting';
+import { BcategoryType } from '../util/category';
 
 const BcategorySetting = () => {
     const dispatch = useDispatch();

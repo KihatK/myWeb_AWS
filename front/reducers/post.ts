@@ -1,13 +1,6 @@
 import produce from 'immer';
-import { Post } from '../util/type';
 
-interface CommentData {
-    content: string,
-    User: {
-        nickname: string,
-    }
-    createdAt: string,
-};
+import { CommentData, Post, AddPostData, EditPostData, AddCommentData } from '../util/post';
 
 export type PostState = {
     mainPosts: Post[];
@@ -73,10 +66,7 @@ export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
 
 export interface AddCommentRequestAction {
     type: typeof ADD_COMMENT_REQUEST,
-    data: {
-        comment: string,
-        postId: string,
-    },
+    data: AddCommentData,
 };
 interface AddCommentSuccessAction {
     type: typeof ADD_COMMENT_SUCCESS,
@@ -87,16 +77,6 @@ interface AddCommentFailureAction {
     error: any,
 };
 
-export interface AddPostData {
-    title: string,
-    nickname: string,
-    content: string,
-    scategory: string,
-    language: string,
-};
-export interface EditPostData extends AddPostData {
-    uuid: string,
-};
 export interface AddPostRequestAction {
     type: typeof ADD_POST_REQUEST,
     data: AddPostData,

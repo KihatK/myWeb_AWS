@@ -5,8 +5,9 @@ import { Drawer, Button } from 'antd';
 
 import CategoryList from './CategoryList';
 import { RootState } from '../reducers';
-import { ADD_BCATEGORY_REQUEST, BcategoryType } from '../reducers/category';
+import { ADD_BCATEGORY_REQUEST } from '../reducers/category';
 import { StyledButton } from '../style/containers/CategoryDrawer';
+import { BcategoryType } from '../util/category';
 
 interface Props {
     visible: boolean;

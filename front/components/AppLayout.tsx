@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { Row, Col, Menu } from 'antd';
+import { Row } from 'antd';
 import { MenuOutlined } from '@ant-design/icons'
 
 import CategoryDrawer from '../containers/CategoryDrawer';

@@ -1,8 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Avatar, Popover } from 'antd';
-import { BookOutlined, BookFilled } from '@ant-design/icons';
+import { Popover } from 'antd';
 import moment from 'moment';
 import Prismjs from '../prismjs/prism';
 
@@ -11,11 +10,12 @@ import CommentForm from './CommentForm';
 import { PostProps } from '../util/type';
 import { RootState } from '../reducers';
 import { REMOVE_POST_REQUEST } from '../reducers/post';
-import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST, BookMarkType } from '../reducers/user';
+import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST } from '../reducers/user';
 import {
     ContentDiv, DragA, StyledCard, StyledDivScategory, StyledBookFilled, StyledBookOutlined, StyledNoneDiv,
     StyledDivTitle, StyledAvatar, StyledSpanNickname, StyledSpanTime, StyledButtonDelete, StyledButtonEdit, StyledCommentDiv,
 } from '../style/containers/PostCard';
+import { BookMarkType } from '../util/user';
 
 moment.locale('ko');
 
