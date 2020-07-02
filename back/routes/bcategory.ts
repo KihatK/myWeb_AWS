@@ -3,6 +3,7 @@ import express from 'express';
 import Bcategory from '../models/bcategory';
 import Scategory from '../models/scategory';
 import { isAdminLoggedIn } from './middlewares';
+import Post from '../models/post';
 
 const router = express.Router();
 
@@ -39,6 +40,52 @@ router.get('/', async (req, res, next) => {
             attributes: ['name'],
         });
         return res.json(category);
+    }
+    catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
+router.patch('/', isAdminLoggedIn, async (req, res, next) => {
+    try {
+        const bcategory = await Bcategory.findOne({ where: { name: req.body.bcategory } });
+        const newBcategory = await Bcategory.findOne({ where: { name: req.body.newBcategory } });
+        if (newBcategory) {
+            return res.status(403).send('이미 존재하는 카테고리 이름입니다.');
+        }
+        await Bcategory.update({ name: req.body.newBcategory }, { where: { id: bcategory.id } });
+        return res.send('변경 성공!');
+    }
+    catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+router.delete('/:bcategory', isAdminLoggedIn, async (req, res, next) => {
+    try {
+        const bcategory = await Bcategory.findOne({ where: { name: req.params.bcategory } });
+        if (!bcategory) {
+            return res.status(403).send('존재하지 않는 카테고리입니다.');
+        }
+        const scategories = await Scategory.findAll({
+            where: { BcategoryId: bcategory.id },
+            order: [['createdAt', 'DESC']],
+        });
+        await Promise.all(scategories.map(async (s: Scategory) => {
+            const posts = await Post.findAll({
+                where: { ScategoryId: s.id },
+                order: [['createdAt', 'DESC']],
+            });
+            return await Promise.all(posts.map((p: Post) => {
+                return Post.destroy({ where: { id: p.id } })
+            }));
+        }));
+        await Promise.all(scategories.map((s: Scategory) => {
+            return Scategory.destroy({ where: { id: s.id } });
+        }));
+        await Bcategory.destroy({ where: { id: bcategory.id } });
+        return res.send('삭제 성공!');
     }
     catch (e) {
         console.error(e);

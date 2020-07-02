@@ -7,6 +7,10 @@ import {
     ADD_SCATEGORY_REQUEST, ADD_SCATEGORY_SUCCESS, ADD_SCATEGORY_FAILURE, AddScategoryRequestAction,
     GET_SCATEGORYLIST_REQUEST, GET_SCATEGORYLIST_SUCCESS, GET_SCATEGORYLIST_FAILURE,
     CHANGE_BCATEGORY_ORDER_REQUEST, CHANGE_BCATEGORY_ORDER_SUCCESS, CHANGE_BCATEGORY_ORDER_FAILURE, ChangeBcategoryOrderRequestAction,
+    EDIT_BCATEGORY_REQUEST, EDIT_BCATEGORY_SUCCESS, EDIT_BCATEGORY_FAILURE, EditBcategoryRequestAction,
+    REMOVE_BCATEGORY_REQUEST, REMOVE_BCATEGORY_SUCCESS, REMOVE_BCATEGORY_FAILURE, RemoveBcategoryRequestAction,
+    EDIT_SCATEGORY_REQUEST, EDIT_SCATEGORY_SUCCESS, EDIT_SCATEGORY_FAILURE, EditScategoryRequestAction,
+    REMOVE_SCATEGORY_REQUEST, REMOVE_SCATEGORY_SUCCESS, REMOVE_SCATEGORY_FAILURE, RemoveScategoryRequestAction,
 } from '../reducers/category';
 
 function getBcategoryAPI() {
@@ -143,6 +147,129 @@ function* watchChangeBcategoryOrder() {
     yield takeEvery(CHANGE_BCATEGORY_ORDER_REQUEST, changeBcategoryOrder);
 }
 
+function editBcategoryAPI(bcategory: string, newBcategory: string) {
+    return axios.patch('/bcategory', { bcategory, newBcategory }, {
+        withCredentials: true,
+    });
+}
+
+function* editBcategory(action: EditBcategoryRequestAction) {
+    try {
+        yield call(editBcategoryAPI, action.data, action.newCategory);
+        yield put({
+            type: EDIT_BCATEGORY_SUCCESS,
+        });
+        yield put({
+            type: GET_BCATEGORY_REQUEST,
+        });
+    }
+    catch (e) {
+        console.error(e);
+        yield put({
+            type: EDIT_BCATEGORY_FAILURE,
+        });
+    }
+}
+
+function* watchEditBcategory() {
+    yield takeEvery(EDIT_BCATEGORY_REQUEST, editBcategory);
+}
+
+function removeBcategoryAPI(bcategory: string) {
+    return axios.delete(`/bcategory/${bcategory}`, {
+        withCredentials: true,
+    });
+}
+
+function* removeBcategory(action: RemoveBcategoryRequestAction) {
+    try {
+        yield call(removeBcategoryAPI, action.data);
+        yield put({
+            type: REMOVE_BCATEGORY_SUCCESS,
+        });
+        yield put({
+            type: GET_BCATEGORY_REQUEST,
+        });
+        yield put({
+            type: GET_SCATEGORYLIST_REQUEST,
+        });
+    }
+    catch (e) {
+        console.error(e);
+        yield put({
+            type: REMOVE_BCATEGORY_FAILURE,
+        });
+    }
+}
+
+function* watchRemoveBcategory() {
+    yield takeEvery(REMOVE_BCATEGORY_REQUEST, removeBcategory);
+}
+
+function editScategoryAPI(scategory: string, newScategory: string) {
+    return axios.patch('/scategory', { scategory, newScategory }, {
+        withCredentials: true,
+    });
+}
+
+function* editScategory(action: EditScategoryRequestAction) {
+    try {
+        yield call(editScategoryAPI, action.data, action.newCategory);
+        yield put({
+            type: EDIT_SCATEGORY_SUCCESS,
+        });
+        yield put({
+            type: GET_BCATEGORY_REQUEST,
+        });
+        yield put({
+            type: GET_SCATEGORYLIST_REQUEST,
+        });
+        
+    }
+    catch (e) {
+        console.error(e);
+        yield put({
+            type: EDIT_SCATEGORY_FAILURE,
+            error: e,
+        });
+    }
+}
+
+function* watchEditScategory() {
+    yield takeEvery(EDIT_SCATEGORY_REQUEST, editScategory);
+}
+
+function removeScategoryAPI(scategory: string) {
+    return axios.delete(`/scategory/${scategory}`, {
+        withCredentials: true,
+    });
+}
+
+function* removeScategory(action: RemoveScategoryRequestAction) {
+    try {
+        yield call(removeScategoryAPI, action.data);
+        yield put({
+            type: REMOVE_SCATEGORY_SUCCESS,
+        });
+        yield put({
+            type: GET_BCATEGORY_REQUEST,
+        });
+        yield put({
+            type: GET_SCATEGORYLIST_REQUEST,
+        });
+    }
+    catch (e) {
+        console.error(e);
+        yield put({
+            type: REMOVE_SCATEGORY_FAILURE,
+        });
+    }
+}
+
+function* watchRemoveScategory() {
+    yield takeEvery(REMOVE_SCATEGORY_REQUEST, removeScategory);
+}
+
 export default function* bcategorySaga() {
     yield all([
         fork(watchAddBcategory),
@@ -150,5 +277,9 @@ export default function* bcategorySaga() {
         fork(watchAddScategory),
         fork(watchGetScategoryList),
         fork(watchChangeBcategoryOrder),
+        fork(watchEditBcategory),
+        fork(watchRemoveBcategory),
+        fork(watchEditScategory),
+        fork(watchRemoveScategory),
     ]);
 }

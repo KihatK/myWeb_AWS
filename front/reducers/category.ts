@@ -41,6 +41,22 @@ export const CHANGE_BCATEGORY_ORDER_REQUEST = 'CHANGE_BCATEGORY_ORDER_REQUEST';
 export const CHANGE_BCATEGORY_ORDER_SUCCESS = 'CHANGE_BCATEGORY_ORDER_SUCCESS';
 export const CHANGE_BCATEGORY_ORDER_FAILURE = 'CHANGE_BCATEGORY_ORDER_FAILURE';
 
+export const EDIT_BCATEGORY_REQUEST = 'EDIT_BCATEGORY_REQUEST';
+export const EDIT_BCATEGORY_SUCCESS = 'EDIT_BCATEGORY_SUCCESS';
+export const EDIT_BCATEGORY_FAILURE = 'EDIT_BCATEGORY_FAILURE';
+
+export const REMOVE_BCATEGORY_REQUEST = 'REMOVE_BCATEGORY_REQUEST';
+export const REMOVE_BCATEGORY_SUCCESS = 'REMOVE_BCATEGORY_SUCCESS';
+export const REMOVE_BCATEGORY_FAILURE = 'REMOVE_BCATEGORY_FAILURE';
+
+export const EDIT_SCATEGORY_REQUEST = 'EDIT_SCATEGORY_REQUEST';
+export const EDIT_SCATEGORY_SUCCESS = 'EDIT_SCATEGORY_SUCCESS';
+export const EDIT_SCATEGORY_FAILURE = 'EDIT_SCATEGORY_FAILURE';
+
+export const REMOVE_SCATEGORY_REQUEST = 'REMOVE_SCATEGORY_REQUEST';
+export const REMOVE_SCATEGORY_SUCCESS = 'REMOVE_SCATEGORY_SUCCESS';
+export const REMOVE_SCATEGORY_FAILURE = 'REMOVE_SCATEGORY_FAILURE';
+
 export interface AddBcategoryRequestAction {
     type: typeof ADD_BCATEGORY_REQUEST,
     data: string,
@@ -124,12 +140,66 @@ interface ChangeBcategoryOrderFailureAction {
     error: any,
 };
 
+export interface EditBcategoryRequestAction {
+    type: typeof EDIT_BCATEGORY_REQUEST,
+    data: string,
+    newCategory: string,
+};
+interface EditBcategorySuccessAction {
+    type: typeof EDIT_BCATEGORY_SUCCESS,
+};
+interface EditBcategoryFailureAction {
+    type: typeof EDIT_BCATEGORY_FAILURE,
+    error: any,
+};
+
+export interface RemoveBcategoryRequestAction {
+    type: typeof REMOVE_BCATEGORY_REQUEST,
+    data: string,
+};
+interface RemoveBcategorySuccessAction {
+    type: typeof REMOVE_BCATEGORY_SUCCESS,
+};
+interface RemoveBcategoryFailureAction {
+    type: typeof REMOVE_BCATEGORY_FAILURE,
+    error: any,
+};
+
+export interface EditScategoryRequestAction {
+    type: typeof EDIT_SCATEGORY_REQUEST,
+    data: string,
+    newCategory: string,
+};
+interface EditScategorySuccessAction {
+    type: typeof EDIT_SCATEGORY_SUCCESS,
+};
+interface EditScategoryFailureAction {
+    type: typeof EDIT_SCATEGORY_FAILURE,
+    error: any,
+};
+
+export interface RemoveScategoryRequestAction {
+    type: typeof REMOVE_SCATEGORY_REQUEST,
+    data: string,
+};
+interface RemoveScategorySuccessAction {
+    type: typeof REMOVE_SCATEGORY_SUCCESS,
+};
+interface RemoveScategoryFailureAction {
+    type: typeof REMOVE_SCATEGORY_FAILURE,
+    error: any,
+};
+
 type CategoryAction = 
     | AddBcategoryRequestAction | AddBcategorySuccessAction | AddBcategoryFailureAction
     | AddScategoryRequestAction | AddScategorySuccessAction | AddScategoryFailureAction
     | GetBcategoryRequestAction | GetBcategorySuccessAction | GetBcategoryFailureAction
     | GetScategoryListRequestAction | GetScategoryListSuccessAction | GetScategoryListFailureAction
-    | ChangeBcategoryOrderRequestAction | ChangeBcategoryOrderSuccessAction | ChangeBcategoryOrderFailureAction;
+    | ChangeBcategoryOrderRequestAction | ChangeBcategoryOrderSuccessAction | ChangeBcategoryOrderFailureAction
+    | EditBcategoryRequestAction | EditBcategorySuccessAction | EditBcategoryFailureAction
+    | RemoveBcategoryRequestAction | RemoveBcategorySuccessAction | RemoveBcategoryFailureAction
+    | EditScategoryRequestAction | EditScategorySuccessAction | EditScategoryFailureAction
+    | RemoveScategoryRequestAction | RemoveScategorySuccessAction | RemoveScategoryFailureAction;
 
 export default (state = initialState, action: CategoryAction): CategoryState => {
     return produce(state, (draft) => {
@@ -191,6 +261,42 @@ export default (state = initialState, action: CategoryAction): CategoryState => 
                 break;
             }
             case CHANGE_BCATEGORY_ORDER_FAILURE: {
+                break;
+            }
+            case EDIT_BCATEGORY_REQUEST: {
+                break;
+            }
+            case EDIT_BCATEGORY_SUCCESS: {
+                break;
+            }
+            case EDIT_BCATEGORY_FAILURE: {
+                break;
+            }
+            case REMOVE_BCATEGORY_REQUEST: {
+                break;
+            }
+            case REMOVE_BCATEGORY_SUCCESS: {
+                break;
+            }
+            case REMOVE_BCATEGORY_FAILURE: {
+                break;
+            }
+            case EDIT_SCATEGORY_REQUEST: {
+                break;
+            }
+            case EDIT_SCATEGORY_SUCCESS: {
+                break;
+            }
+            case EDIT_SCATEGORY_FAILURE: {
+                break;
+            }
+            case REMOVE_SCATEGORY_REQUEST: {
+                break;
+            }
+            case REMOVE_SCATEGORY_SUCCESS: {
+                break;
+            }
+            case REMOVE_SCATEGORY_FAILURE: {
                 break;
             }
             default: {

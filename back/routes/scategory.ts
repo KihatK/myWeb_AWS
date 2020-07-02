@@ -3,6 +3,7 @@ import express from 'express';
 import Scategory from '../models/scategory';
 import Bcategory from '../models/bcategory';
 import { isAdminLoggedIn } from './middlewares';
+import Post from '../models/post';
 
 const router = express.Router();
 
@@ -36,6 +37,43 @@ router.get('/', async (req, res, next) => {  //scategory들 가져오기
             order: [['createdAt', 'DESC']],
         });
         return res.json(scategories);
+    }
+    catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
+router.patch('/', isAdminLoggedIn, async (req, res, next) => {
+    try {
+        const scategory = await Scategory.findOne({ where: { name: req.body.scategory } });
+        const newScategory = await Scategory.findOne({ where: { name: req.body.newScategory } });
+        if (newScategory) {
+            return res.status(403).send('이미 존재하는 카테고리 이름입니다.');
+        }
+        await Scategory.update({ name: req.body.newScategory }, { where: { id: scategory.id } });
+        return res.send('변경 성공!');
+    }
+    catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+router.delete('/:scategory', isAdminLoggedIn, async (req, res, next) => {
+    try {
+        const scategory = await Scategory.findOne({ where: { name: req.params.scategory } });
+        if (!scategory) {
+            return res.status(403).send('존재하지 않는 카테고리입니다.');
+        }
+        const posts = await Post.findAll({
+            where: { ScategoryId: scategory.id },
+            order: [['createdAt', 'DESC']],
+        });
+        await Promise.all(posts.map((p: Post) => {
+            return Post.destroy({ where: { id: p.id } });
+        }));
+        await Scategory.destroy({ where: { id: scategory.id } });
+        return res.send('삭제 성공!');
     }
     catch (e) {
         console.error(e);

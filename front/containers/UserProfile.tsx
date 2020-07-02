@@ -19,8 +19,8 @@ const UserProfile = () => {
         });
     }, []);
 
-    const clickCategoryOrder = useCallback(() => {
-        Router.push('/categoryorder');
+    const clickCategorySetting = useCallback(() => {
+        Router.push('/categorysetting');
     }, []);
 
     const clickBookmarks = useCallback(() => {
@@ -38,8 +38,8 @@ const UserProfile = () => {
                 <SettingOutlined />
             </Popover>
             {admin && (
-                <Popover content={<div>카테고리 순서</div>}>
-                    <StyledProfile onClick={clickCategoryOrder}/>
+                <Popover content={<div>카테고리 설정</div>}>
+                    <StyledProfile onClick={clickCategorySetting}/>
                 </Popover>
             )}
             <Popover content={<div>로그아웃</div>}>

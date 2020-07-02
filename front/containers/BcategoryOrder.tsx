@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Select } from 'antd';
+import { Form, Button, Select, Card } from 'antd';
 
 import { RootState } from '../reducers';
 import { CHANGE_BCATEGORY_ORDER_REQUEST, BcategoryType } from '../reducers/category';
+import { StyledCard } from '../style/containers/BcategoryOrder';
 
 const BcategoryOrder = () => {
     const dispatch = useDispatch();
@@ -30,11 +31,11 @@ const BcategoryOrder = () => {
     }, [bcategory1, bcategory2]);
 
     return (
-        <>
+        <StyledCard>
             <Form>
                 <h1>큰 카테고리 순서 변경</h1>
                 <Select
-                    style={{ width: '1012px' }}
+                    style={{ width: '950px' }}
                     labelInValue
                     defaultValue={{ key: bcategory1 }}
                     onChange={changeBcategory1}
@@ -44,7 +45,7 @@ const BcategoryOrder = () => {
                     ))}
                 </Select>
                 <Select
-                    style={{ width: '1012px' }}
+                    style={{ width: '950px' }}
                     labelInValue
                     defaultValue={{ key: bcategory2 }}
                     onChange={changeBcategory2}
@@ -53,9 +54,9 @@ const BcategoryOrder = () => {
                         <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
                     ))}
                 </Select>
-                <Button onClick={bcategoryOrder}>변경</Button>
+                <Button onClick={bcategoryOrder} type="primary">변경</Button>
             </Form>
-        </>
+        </StyledCard>
     );
 };
 

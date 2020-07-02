@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AppProps } from 'next/app';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet';
 import wrapper from '../store/makeStore';
 import AppLayout from '../components/AppLayout';
 import { RootState } from '../reducers';
-import { LOAD_USER_REQUEST } from '../reducers/user';
 import { GET_BCATEGORY_REQUEST } from '../reducers/category';
 
 import 'antd/dist/antd.css';  //antd 스타일 적용
@@ -25,10 +24,18 @@ const App = ({ Component }: Props) => {
     const dispatch = useDispatch();
     const { scategoryList } = useSelector((state: RootState) => state.category);
 
+    const countRef = useRef(false);
+
     useEffect(() => {
-        dispatch({
-            type: GET_BCATEGORY_REQUEST,
-        });
+        if (!countRef.current) {
+            countRef.current = true;
+            return;
+        }
+        else {
+            dispatch({
+                type: GET_BCATEGORY_REQUEST,
+            });
+        }
     }, [scategoryList]);
 
     return (

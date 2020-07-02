@@ -7,6 +7,9 @@ import { MenuOutlined } from '@ant-design/icons'
 import CategoryDrawer from '../containers/CategoryDrawer';
 import UserProfile from '../containers/UserProfile';
 import { RootState } from '../reducers';
+import {
+    StyledCol, StyledMenu, StyledMenuAlign, StyledMenuItem, StyledMenuItemBlog, StyledMenuItemLogin
+} from '../style/components/AppLayout';
 
 interface Props {
     children: any;
@@ -27,39 +30,39 @@ const AppLayout = ({ children }: Props) => {
     return (
         <>
             <Row>
-                <Col xs={24} md={4} style={{ background: '#F0F0F0' }}>
-                    <Menu mode="horizontal" style={{ height: '65px' }}>
-                        <Menu.Item key="category" style={{ verticalAlign: 'middle', top: '5px' }} onClick={showDrawer}>
+                <StyledCol xs={24} md={4}>
+                    <StyledMenu mode="horizontal">
+                        <StyledMenuItem key="category" onClick={showDrawer}>
                             <MenuOutlined />
-                        </Menu.Item>
-                    </Menu>
-                </Col>
-                <Col xs={24} md={16} style={{ background: '#F0F0F0' }}>
-                    <Menu mode="horizontal" style={{ textAlign: 'center', height: '65px' }}>
-                        <Menu.Item key="blog" style={{ verticalAlign: 'middle', fontSize: '35px', top: '5px' }}>
+                        </StyledMenuItem>
+                    </StyledMenu>
+                </StyledCol>
+                <StyledCol xs={24} md={16}>
+                    <StyledMenuAlign mode="horizontal">
+                        <StyledMenuItemBlog key="blog">
                             <Link href="/">
                                 <a>Kihat's Blog</a>
                             </Link>
-                        </Menu.Item>
-                    </Menu>
+                        </StyledMenuItemBlog>
+                    </StyledMenuAlign>
                     {children}
-                </Col>
-                <Col xs={24} md={4} style={{ background: '#F0F0F0' }}>
-                    <Menu mode="horizontal" style={{ height: '65px' }}>
+                </StyledCol>
+                <StyledCol xs={24} md={4}>
+                    <StyledMenu mode="horizontal">
                         {me
                             ? (
                                 <UserProfile/>  
                             )
                             : (
-                                <Menu.Item key="login" style={{ verticalAlign: 'middle', top: '7px' }}>
+                                <StyledMenuItemLogin key="login">
                                     <Link href="/signin">
                                         <a>로그인</a>
                                     </Link>
-                                </Menu.Item>
+                                </StyledMenuItemLogin>
                             )
                         }
-                    </Menu>
-                </Col>
+                    </StyledMenu>
+                </StyledCol>
             </Row>
             <CategoryDrawer visible={visible} onClose={onClose}/>
         </>
