@@ -2,26 +2,9 @@ import React from 'react';
 import { Avatar, Comment, List } from 'antd';
 import moment from 'moment';
 
-interface Props {
-    post: {
-        title: string,
-        content: string;
-        scategory: string;
-        User: {
-            nickname: string,
-        },
-        Comments: {
-            content: string,
-            User: {
-                nickname: string,
-            }
-            createdAt: string,
-        }[],
-        createdAt: string;
-    };
-}
+import { PostProps } from '../util/props';
 
-const CommentList = ({ post }: Props) => {
+const CommentList = ({ post }: PostProps) => {
     return (
         <List
             style={{ position: 'relative', top: '20px' }}

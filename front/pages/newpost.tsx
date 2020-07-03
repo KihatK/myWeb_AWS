@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import { Input, Select } from 'antd';
+import { Select } from 'antd';
 import axios from 'axios';
 
 import DraftEditor from '../containers/DraftEditor';
@@ -15,6 +15,7 @@ import { StyledInput } from '../style/pages/newpost';
 const newpost = () => {
     const dispatch = useDispatch();
     const nickname = useSelector((state: RootState) => state.user.me?.nickname);
+    const admin = useSelector((state: RootState) => state.user.me?.admin);
     const scategoryList = useSelector((state: RootState) => state.category.scategoryList);
     const { isAddedPost } = useSelector((state: RootState) => state.post);
 
@@ -34,6 +35,14 @@ const newpost = () => {
     const changeLanguage = useCallback(value => {
         setLanguage(value.key);
     }, []);
+
+    useEffect(() => {
+        if (!admin) {
+            alert('권한이 없습니다.');
+            Router.back();
+            return;
+        }
+    }, [admin]);
 
     useEffect(() => {
         if (!countRef.current) {

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import { Form, Input, Button, Card } from 'antd';
+import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 
 import wrapper, { IStore } from '../store/makeStore';
@@ -72,7 +72,7 @@ const SignIn = () => {
                     <Button type="primary" htmlType="submit" loading={isLoggingIn}>
                         로그인
                     </Button>
-                    <Link href="/signup">
+                    <Link href="/signup" prefetch>
                         <StyledA>회원가입하기</StyledA>
                     </Link>
                 </Form.Item>

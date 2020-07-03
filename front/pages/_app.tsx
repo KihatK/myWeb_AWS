@@ -61,8 +61,6 @@ const App = ({ Component }: Props) => {
                 }]}
                 link={[{
                     rel: 'shortcut icon', href: '',
-                }, {
-                    rel: 'stylesheet', href: "../node_modules/antd/dist/antd.css"
                 }]}
             />
             <AppLayout>

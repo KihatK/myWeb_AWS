@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Router from 'next/router';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import { Table } from 'antd';
 import axios from 'axios';
 
 import wrapper, { IStore } from '../store/makeStore';
@@ -12,6 +12,7 @@ import { GET_BCATEGORY_REQUEST } from '../reducers/category';
 import { StyledH1, StyledTable, StyledDiv } from '../style/pages/bookmarks';
 
 const bookmarks = () => {
+    const nickname = useSelector((state: RootState) => state.user.me?.nickname);
     const BookMarked = useSelector((state: RootState) => state.user.me?.BookMarked);
 
     const columns: { title: string, dataIndex: string, key: string, render?: (text: string) => JSX.Element }[] = [{
@@ -35,6 +36,14 @@ const bookmarks = () => {
         dataIndex: 'view',
         key: 'view',
     }];
+
+    useEffect(() => {
+        if (!nickname) {
+            alert('로그인이 필요합니다.');
+            Router.back();
+            return;
+        }
+    }, [nickname]);
 
     return (
         <>

@@ -9,8 +9,8 @@ import { RootState } from '../reducers';
 import { GET_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 import { GET_BCATEGORY_REQUEST } from '../reducers/category';
-import { Post } from '../util/type';
 import { StyledDiv } from '../style/pages/home';
+import { Post } from '../util/post';
 
 const Home = () => {
     const mainPosts = useSelector((state: RootState) => state.post.mainPosts);

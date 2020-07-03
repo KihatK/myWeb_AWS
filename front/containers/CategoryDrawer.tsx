@@ -1,20 +1,16 @@
 import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { Drawer, Button } from 'antd';
+import { Drawer } from 'antd';
 
 import CategoryList from './CategoryList';
 import { RootState } from '../reducers';
 import { ADD_BCATEGORY_REQUEST } from '../reducers/category';
 import { StyledButton } from '../style/containers/CategoryDrawer';
 import { BcategoryType } from '../util/category';
+import { CategoryDrawerProps } from '../util/props';
 
-interface Props {
-    visible: boolean;
-    onClose: () => void;
-}
-
-const CategoryDrawer = ({ visible, onClose }: Props) => {
+const CategoryDrawer = ({ visible, onClose }: CategoryDrawerProps) => {
     const dispatch = useDispatch();
     const { bcategory, isAddingBcategory } = useSelector((state: RootState) => state.category);
     const admin = useSelector((state: RootState) => state.user.me?.admin);

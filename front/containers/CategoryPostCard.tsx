@@ -7,7 +7,6 @@ import Prismjs from '../prismjs/prism';
 
 import CommentList from '../components/CommentList';
 import CommentForm from './CommentForm';
-import { PostProps } from '../util/type';
 import { RootState } from '../reducers';
 import { REMOVE_POST_REQUEST } from '../reducers/post';
 import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST } from '../reducers/user';
@@ -16,6 +15,7 @@ import {
     StyledDivTitle, StyledAvatar, StyledSpanNickname, StyledSpanTime, StyledButtonDelete, StyledButtonEdit, StyledCommentDiv,
 } from '../style/containers/PostCard';
 import { BookMarkType } from '../util/user';
+import { PostProps } from '../util/props';
 
 moment.locale('ko');
 

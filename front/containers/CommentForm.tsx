@@ -4,8 +4,8 @@ import { Form, Input } from 'antd';
 
 import { ADD_COMMENT_REQUEST } from '../reducers/post';
 import { RootState } from '../reducers';
-import { PostProps } from '../util/type';
 import { StyledButton } from '../style/containers/CommentForm';
+import { PostProps } from '../util/props';
 
 const CommentForm = ({ post }: PostProps) => {
     const dispatch = useDispatch();

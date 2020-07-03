@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Select, Input, Form, Button } from 'antd';
+import { Select, Input, Form, Button } from 'antd';
 
 import { RootState } from '../reducers';
 import { EDIT_BCATEGORY_REQUEST, REMOVE_BCATEGORY_REQUEST } from '../reducers/category';

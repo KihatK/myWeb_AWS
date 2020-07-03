@@ -55,7 +55,7 @@ const AppLayout = ({ children }: Props) => {
                             )
                             : (
                                 <StyledMenuItemLogin key="login">
-                                    <Link href="/signin">
+                                    <Link href="/signin" prefetch>
                                         <a>로그인</a>
                                     </Link>
                                 </StyledMenuItemLogin>

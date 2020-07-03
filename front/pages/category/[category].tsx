@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import Router from 'next/router';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
@@ -17,15 +16,8 @@ const Category = () => {
     const router = useRouter();
     const { category } = router.query;
 
-    const dispatch = useDispatch();
     const { postList } = useSelector((state: RootState) => state.postlist);
     const admin = useSelector((state: RootState) => state.user.me?.admin);
-
-    const countRef = useRef(false);
-
-    const clickPost = useCallback(() => {
-        Router.push('/newpost');
-    }, []);
 
     const columns: { title: string, dataIndex: string, key: string, render?: (text: string) => JSX.Element }[] = [{
         title: '제목',
@@ -55,9 +47,13 @@ const Category = () => {
             <StyledTable columns={columns} dataSource={postList} />
             {admin && 
                 (
-                    <StyledButton onClick={clickPost}>
-                        글쓰기
-                    </StyledButton>
+                    <Link href="/newpost" prefetch>
+                        <a>
+                            <StyledButton>
+                                글쓰기
+                            </StyledButton>
+                        </a>
+                    </Link>
                 )
             }
             <StyledDiv>

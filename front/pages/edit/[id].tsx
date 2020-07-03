@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Router, { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import { Input, Select } from 'antd';
+import { Select } from 'antd';
 import axios from 'axios';
 
 import DraftEditorEdit from '../../containers/DraftEditorEdit';
@@ -18,6 +18,7 @@ const Id = () => {
     const { id } = router.query;
 
     const nickname = useSelector((state: RootState) => state.user.me?.nickname);
+    const admin = useSelector((state: RootState) => state.user.me?.admin);
     const scategoryList = useSelector((state: RootState) => state.category.scategoryList);
     const { singlePost, isEditedPost } = useSelector((state: RootState) => state.post);
 
@@ -35,6 +36,14 @@ const Id = () => {
     const changeLanguage = useCallback(value => {
         setLanguage(value.key);
     }, []);
+
+    useEffect(() => {
+        if (!admin) {
+            alert('권한이 없습니다.');
+            Router.back();
+            return;
+        }
+    }, [admin]);
 
     useEffect(() => {
         if (!countRef.current) {

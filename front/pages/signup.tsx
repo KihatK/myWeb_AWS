@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Card } from 'antd';
+import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 
-import wrapper, {IStore } from '../store/makeStore';
+import wrapper, { IStore } from '../store/makeStore';
 import { RootState } from '../reducers';
 import { SIGN_UP_REQUEST, LOAD_USER_REQUEST } from '../reducers/user';
 import { GET_BCATEGORY_REQUEST } from '../reducers/category';

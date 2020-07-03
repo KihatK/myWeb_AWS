@@ -5,7 +5,6 @@ import Prismjs from '../prismjs/prism';
 import moment from 'moment';
 
 import CommentList from '../components/CommentList';
-import { PostProps } from '../util/type';
 import { RootState } from '../reducers';
 import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST } from '../reducers/user';
 import {
@@ -13,6 +12,7 @@ import {
     StyledDivTitle, StyledAvatar, StyledSpanNickname, StyledSpanTime, StyledCommentDiv,
 } from '../style/containers/PostCard';
 import { BookMarkType } from '../util/user';
+import { PostProps } from '../util/props';
 
 moment.locale('ko');
 

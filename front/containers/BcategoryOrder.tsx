@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Select, Card } from 'antd';
+import { Form, Button, Select } from 'antd';
 
 import { RootState } from '../reducers';
 import { CHANGE_BCATEGORY_ORDER_REQUEST } from '../reducers/category';

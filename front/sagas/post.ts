@@ -3,12 +3,13 @@ import axios from 'axios';
 
 import {
     ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, AddCommentRequestAction,
-    ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE, AddPostRequestAction, AddPostData,
+    ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE, AddPostRequestAction,
     GET_POSTS_REQUEST, GET_POSTS_SUCCESS, GET_POSTS_FAILURE,
     GET_POST_REQUEST, GET_POST_SUCCESS, GET_POST_FAILURE, GetPostRequestAction,
     REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE, RemovePostRequestAction,
-    EDIT_POST_REQUEST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE, EditPostRequestAction, EditPostData
+    EDIT_POST_REQUEST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE, EditPostRequestAction
 } from '../reducers/post';
+import { AddPostData, EditPostData } from '../util/post';
 
 function addCommentAPI(commentData: { comment: string, postId: string }) {
     return axios.post(`/post/${commentData.postId}/comment`, { comment: commentData.comment}, {

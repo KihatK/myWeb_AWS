@@ -33,7 +33,7 @@ if (prod) {
     app.use(helmet());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: '',
+        origin: true,
         credentials: true,
     }));
 }

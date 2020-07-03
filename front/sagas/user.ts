@@ -2,13 +2,14 @@ import { all, fork, takeEvery, put, delay, call } from 'redux-saga/effects';
 import axios from 'axios';
 
 import {
-    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, SignupRequestAction, SignupData,
-    LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LoginRequestAction, LoginData,
+    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, SignupRequestAction,
+    LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LoginRequestAction,
     LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE,
     LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE,
     BOOKMARK_POST_REQUEST, BOOKMARK_POST_SUCCESS, BOOKMARK_POST_FAILURE, BookmarkPostRequestAction,
     UNBOOKMARK_POST_REQUEST, UNBOOKMARK_POST_SUCCESS, UNBOOKMARK_POST_FAILURE, UnbookmarkPostRequestAction,
 } from '../reducers/user';
+import { SignupData, LoginData } from '../util/user';
 
 function signupAPI(signupData: SignupData) {
     return axios.post('/user', signupData);
