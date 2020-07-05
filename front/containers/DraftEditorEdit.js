@@ -105,8 +105,49 @@ const DraftEditor = ({ nickname, title, category, language, editing, uuid }) => 
     );
 
     const [editorState, setEditorState] = useState(() => EditorState.createWithContent(state));
-    
     const editor = useRef();
+
+    const clickPost = useCallback(() => {
+        const inlineStyles = exporter(editorState);
+        const html = stateToHTML(editorState.getCurrentContent(), { inlineStyles });
+        dispatch({
+            type: EDIT_POST_REQUEST,
+            data: {
+                title,
+                nickname,
+                content: html,
+                scategory: category,
+                language,
+                uuid,
+            },
+        });
+    }, [editorState, title, nickname, category, language, uuid]);
+
+    // useEffect(() => {
+    //     const inlineStyles = exporter(editorState);
+    //     const html = stateToHTML(editorState.getCurrentContent(), { inlineStyles });
+    //     console.log(html);
+    // }, [editorState]);
+
+    //syntax highlighting
+    useEffect(() => {
+        const selection = editorState.getSelection();
+        const block = editorState
+            .getCurrentContent()
+            .getBlockForKey(selection.getStartKey());
+        if (block.getType() === "code-block") {
+            const data = block.getData().merge({ language: 'javascript' });
+            const newBlock = block.merge({ data });
+            const newContentState = editorState.getCurrentContent().merge({
+                blockMap: editorState
+                    .getCurrentContent()
+                    .getBlockMap()
+                    .set(selection.getStartKey(), newBlock),
+                selectionAfter: selection
+            });
+            setEditorState(EditorState.push(editorState, newContentState, "change-block-data"));
+        }
+    }, [editorState]);
 
     //커멘드 사용 허용
     const handleKeyCommand = (command, editorState) => {
@@ -180,48 +221,6 @@ const DraftEditor = ({ nickname, title, category, language, editing, uuid }) => 
     const options = x => x.map(fontSize => {
         return <option key={fontSize} value={fontSize}>{fontSize}</option>;
     });
-
-    const clickPost = useCallback(() => {
-        const inlineStyles = exporter(editorState);
-        const html = stateToHTML(editorState.getCurrentContent(), { inlineStyles });
-        dispatch({
-            type: EDIT_POST_REQUEST,
-            data: {
-                title,
-                nickname,
-                content: html,
-                scategory: category,
-                language,
-                uuid,
-            },
-        });
-    }, [editorState, title, nickname, category, language, uuid]);
-
-    // useEffect(() => {
-    //     const inlineStyles = exporter(editorState);
-    //     const html = stateToHTML(editorState.getCurrentContent(), { inlineStyles });
-    //     console.log(html);
-    // }, [editorState]);
-
-    //syntax highlighting
-    useEffect(() => {
-        const selection = editorState.getSelection();
-        const block = editorState
-            .getCurrentContent()
-            .getBlockForKey(selection.getStartKey());
-        if (block.getType() === "code-block") {
-            const data = block.getData().merge({ language: 'javascript' });
-            const newBlock = block.merge({ data });
-            const newContentState = editorState.getCurrentContent().merge({
-                blockMap: editorState
-                    .getCurrentContent()
-                    .getBlockMap()
-                    .set(selection.getStartKey(), newBlock),
-                selectionAfter: selection
-            });
-            setEditorState(EditorState.push(editorState, newContentState, "change-block-data"));
-        }
-    }, [editorState]);
 
     return (
         <>
