@@ -1,5 +1,6 @@
 import {
-    Model, DataTypes, Sequelize, UUIDV4
+    Model, DataTypes, Sequelize,
+    BelongsToManyAddAssociationMixin, BelongsToManyRemoveAssociationMixin, HasManyAddAssociationMixin
 } from 'sequelize';
 import { sequelize } from './sequelize';
 import { dbType } from './index';
@@ -19,6 +20,10 @@ class Post extends Model {
     public PostId!: number;
     public ScategoryId!: number;
     public readonly createdAt!: Date;
+
+    public addBookMarker!: BelongsToManyAddAssociationMixin<User, number>;
+    public removeBookMarker!: BelongsToManyRemoveAssociationMixin<User, number>;
+    public addComment!: HasManyAddAssociationMixin<Comment, number>;
 
     public readonly User?: User;
     public readonly Comments?: Comment[];

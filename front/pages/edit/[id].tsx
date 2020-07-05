@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import { Select } from 'antd';
@@ -14,9 +14,6 @@ import { GET_POST_REQUEST } from '../../reducers/post';
 import { StyledInput } from '../../style/pages/editid';
 
 const Id = () => {
-    const router = useRouter();
-    const { id } = router.query;
-
     const nickname = useSelector((state: RootState) => state.user.me?.nickname);
     const admin = useSelector((state: RootState) => state.user.me?.admin);
     const scategoryList = useSelector((state: RootState) => state.category.scategoryList);
@@ -41,14 +38,12 @@ const Id = () => {
         if (!admin) {
             alert('권한이 없습니다.');
             Router.back();
-            return;
         }
     }, [admin]);
 
     useEffect(() => {
         if (!countRef.current) {
             countRef.current = true;
-            return;
         }
         else {
             if (isEditedPost) {

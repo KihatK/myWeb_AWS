@@ -1,8 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { Button } from 'antd';
 
 import Draft, { EditorState, convertFromRaw, RichUtils, ContentState } from 'draft-js';
 import Editor, { composeDecorators } from 'draft-js-plugins-editor';
@@ -118,7 +116,7 @@ const DraftEditor = ({ nickname, title, category, language }) => {
     const countRef = useRef(false);
 
     //커멘드 사용 허용
-    const handleKeyCommand = useCallback((command, editorState) => {
+    const handleKeyCommand = (command, editorState) => {
         let newState;
 
         if (CodeUtils.hasSelectionInBlock(editorState)) {
@@ -134,61 +132,61 @@ const DraftEditor = ({ nickname, title, category, language }) => {
             return 'handled';
         }
         return 'not-handled';
-    }, []);
+    }
 
-    const keyBindingFn = useCallback((evt) => {
+    const keyBindingFn = (evt) => {
         if (!CodeUtils.hasSelectionInBlock(editorState)) return Draft.getDefaultKeyBinding(evt);
 
         const command = CodeUtils.getKeyBinding(evt);
 
         return command || Draft.getDefaultKeyBinding(evt);
-    }, [editorState]);
+    };
 
-    const handleReturn = useCallback((evt) => {
+    const handleReturn = (evt) => {
         if (!CodeUtils.hasSelectionInBlock(editorState)) return 'not-handled';
 
         setEditorState(CodeUtils.handleReturn(evt, editorState));
         return 'handled';
-    }, [editorState]);
+    };
 
-    const onTab = useCallback((evt) => {
+    const onTab = (evt) => {
         if (!CodeUtils.hasSelectionInBlock(editorState)) return 'not-handled';
 
         setEditorState(CodeUtils.onTab(evt, editorState));
         return 'handled';
-    }, [editorState]);
+    };
 
     //custom style 적용
-    const toggleFontSize = useCallback(fontSize => {
+    const toggleFontSize = fontSize => {
         const newEditorState = styles.fontSize.toggle(editorState, fontSize);
 
         return setEditorState(newEditorState);
-    }, [editorState]);
-    const removeFontSize = useCallback(() => {
+    };
+    const removeFontSize = () => {
         const newEditorState = styles.fontSize.remove(editorState);
      
         return setEditorState(newEditorState);
-    }, [editorState]);
-    const addFontSize = useCallback(val => () => {
+    };
+    const addFontSize = val => () => {
         const newEditorState = styles.fontSize.add(editorState, val);
      
         return setEditorState(newEditorState);
-    }, [editorState]);
+    };
 
-    const toggleColor = useCallback(color => {
+    const toggleColor = color => {
         const newEditorState = styles.color.toggle(editorState, color);
      
         return setEditorState(newEditorState);
-    }, [editorState]);
-    const toggleTextTransform = useCallback(color => {
+    };
+    const toggleTextTransform = color => {
         const newEditorState = styles.textTransform.toggle(editorState, color);
      
         return setEditorState(newEditorState);
-    }, [editorState]);
+    };
 
-    const options = useCallback(x => x.map(fontSize => {
+    const options = x => x.map(fontSize => {
         return <option key={fontSize} value={fontSize}>{fontSize}</option>;
-    }), []);
+    });
 
     const clickPost = useCallback(() => {
         const inlineStyles = exporter(editorState);
@@ -203,7 +201,7 @@ const DraftEditor = ({ nickname, title, category, language }) => {
                 language,
             },
         });
-    }, [editorState]);
+    }, [editorState, title, nickname, category, language]);
 
     // useEffect(() => {
     //     const inlineStyles = exporter(editorState);
@@ -234,7 +232,6 @@ const DraftEditor = ({ nickname, title, category, language }) => {
     useEffect(() => {
         if (!countRef.current) {
             countRef.current = true;
-            return;
         }
         else {
             if (isAddedPost) {

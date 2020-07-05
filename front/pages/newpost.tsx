@@ -40,14 +40,12 @@ const newpost = () => {
         if (!admin) {
             alert('권한이 없습니다.');
             Router.back();
-            return;
         }
     }, [admin]);
 
     useEffect(() => {
         if (!countRef.current) {
             countRef.current = true;
-            return;
         }
         else {
             if (isAddedPost) {

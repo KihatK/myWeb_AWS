@@ -35,7 +35,7 @@ const config: IConfigGroup = {
   "production": {
     "username": "root",
     "password": undefined,
-    "database": "myWeb_produc",
+    "database": "myWeb_product",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false

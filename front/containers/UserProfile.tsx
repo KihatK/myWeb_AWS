@@ -25,7 +25,9 @@ const UserProfile = () => {
             <Link href="/bookmarks" prefetch>
                 <a><StyledBook/></a>
             </Link>
-            <SettingOutlined />
+            <Link href="/setting" prefetch>
+                <a><SettingOutlined /></a>
+            </Link>
             {admin && (
                 <Link href="/categorysetting" prefetch>
                     <a><StyledProfile/></a>

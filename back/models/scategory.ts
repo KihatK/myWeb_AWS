@@ -1,5 +1,6 @@
 import {
     DataTypes, Model,
+    HasManyAddAssociationMixin
 } from 'sequelize';
 import { sequelize } from './sequelize';
 import { dbType } from './index';
@@ -11,6 +12,8 @@ class Scategory extends Model {
     public name!: string;
     public order!: number;
     public BcategoryId!: number;
+
+    public addPost!: HasManyAddAssociationMixin<Post, number>;
 
     public Posts?: Post[];
 };

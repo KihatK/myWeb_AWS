@@ -30,9 +30,11 @@ const CategoryPostCard = ({ post }: PostProps) => {
 
     const clickToggleComment = useCallback(() => {
         if (toggleComment) {
-            return setToggleComment(false);
+            setToggleComment(false);
         }
-        return setToggleComment(true);
+        else {
+            setToggleComment(true);
+        }
     }, [toggleComment]);
 
     const removePost = useCallback(uuid => () => {
@@ -69,7 +71,6 @@ const CategoryPostCard = ({ post }: PostProps) => {
     useEffect(() => {
         if (!countRef.current) {
             countRef.current = true;
-            return;
         }
         else {
             if (isRemovedPost) {

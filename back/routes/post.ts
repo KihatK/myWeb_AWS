@@ -35,9 +35,9 @@ router.post('/', isAdminLoggedIn, async (req, res, next) => {  //게시글 작�
             content: req.body.content,
             scategory: req.body.scategory,
             UserId: req.user?.id,
-            ScategoryId: scategoryOfPost.id,
+            ScategoryId: scategoryOfPost?.id,
         });
-        await scategoryOfPost.addPost(newPost);
+        await scategoryOfPost?.addPost(newPost);
         const fullPost = await Post.findOne({
             where: { id: newPost.id },
             include: [{
@@ -147,7 +147,7 @@ router.patch('/:uuid', isAdminLoggedIn, async (req, res, next) => {
             title: req.body.title,
             content: req.body.content,
             scategory: req.body.scategory,
-            ScategoryId: scategoryOfPost.id,
+            ScategoryId: scategoryOfPost?.id,
         }, {
             where: { uuid: req.params.uuid }
         });

@@ -25,9 +25,11 @@ const PostCard = ({ post }: PostProps) => {
 
     const clickToggleComment = useCallback(() => {
         if (toggleComment) {
-            return setToggleComment(false);
+            setToggleComment(false);
         }
-        return setToggleComment(true);
+        else {
+            setToggleComment(true);
+        }
     }, [toggleComment]);
 
     const bookmarkPost = useCallback(uuid => () => {

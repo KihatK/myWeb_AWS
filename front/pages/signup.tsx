@@ -54,34 +54,31 @@ const SignUp = () => {
     const finishSignup = useCallback(() => {
         if (!id) {
             alert('아이디를 입력하셔야 합니다.');
-            return;
         }
-        if (!nickname) {
+        else if (!nickname) {
             alert('닉네임을 입력하셔야 합니다.');
-            return;
         }
-        if (!password) {
+        else if (!password) {
             alert('비밀번호를 입력하셔야 합니다.');
-            return;
         }
-        if (passwordError) {
+        else if (passwordError) {
             alert('비밀번호가 같지 않습니다.');
-            return;
         }
-        dispatch({
-            type: SIGN_UP_REQUEST,
-            data: {
-                userId: id,
-                nickname,
-                password,
-            },
-        });
+        else {
+            dispatch({
+                type: SIGN_UP_REQUEST,
+                data: {
+                    userId: id,
+                    nickname,
+                    password,
+                },
+            });
+        }
     }, [id, nickname, password, passwordError]);
 
     useEffect(() => {
         if (!countRef.current) {
             countRef.current = true;
-            return;
         }
         else {
             if (isSignedUp) {

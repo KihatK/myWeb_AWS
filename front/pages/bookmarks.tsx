@@ -41,7 +41,6 @@ const bookmarks = () => {
         if (!nickname) {
             alert('로그인이 필요합니다.');
             Router.back();
-            return;
         }
     }, [nickname]);
 

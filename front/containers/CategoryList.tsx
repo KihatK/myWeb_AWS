@@ -19,9 +19,11 @@ const CategoryList = ({ category }: CategoryListProps) => {
 
     const clickCategory = useCallback(() => {
         if (categoryOpen) {
-            return setCategoryOpen(false);
+            setCategoryOpen(false);
         }
-        return setCategoryOpen(true);
+        else {
+            setCategoryOpen(true);
+        }
     }, [categoryOpen]);
 
     const addCategory = useCallback(() => {

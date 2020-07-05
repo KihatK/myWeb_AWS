@@ -19,7 +19,6 @@ const categoryorder = () => {
         if (!admin) {
             alert('권한이 없습니다.');
             Router.back();
-            return;
         }
     }, [admin]);
 

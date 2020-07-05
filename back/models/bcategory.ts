@@ -1,5 +1,6 @@
 import {
-    DataTypes, Model, HasManyGetAssociationsMixin
+    DataTypes, Model, 
+    HasManyAddAssociationMixin,
 } from 'sequelize';
 import { sequelize } from './sequelize';
 import { dbType } from './index';
@@ -11,7 +12,7 @@ class Bcategory extends Model {
     public name!: string;
     public order!: number;
 
-    // public getScategorys!: HasManyGetAssociationsMixin<Scategory>;
+    public addScategory!: HasManyAddAssociationMixin<Scategory, number>;
 
     public readonly Scategorys?: Scategory[];
 }

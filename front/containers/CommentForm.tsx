@@ -31,7 +31,6 @@ const CommentForm = ({ post }: PostProps) => {
     useEffect(() => {
         if (!countRef.current) {
             countRef.current = true;
-            return;
         }
         else {
             if (isAddedComment) {

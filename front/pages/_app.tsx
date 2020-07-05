@@ -29,7 +29,6 @@ const App = ({ Component }: Props) => {
     useEffect(() => {
         if (!countRef.current) {
             countRef.current = true;
-            return;
         }
         else {
             dispatch({
