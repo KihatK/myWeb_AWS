@@ -8,6 +8,6 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",  //dist 폴더를 만들어서 그 안에 js 파일들을 보관함.
-        "typeRoots": ["./types"]
+        "typeRoots": ["./types", "./node_modules/@types"]
     },
 }
