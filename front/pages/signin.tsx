@@ -14,6 +14,7 @@ import { StyledCard, StyledA, StyledDiv } from '../style/pages/signin';
 
 const SignIn = () => {
     const dispatch = useDispatch();
+    const nickname = useSelector((state: RootState) => state.user.me?.nickname);
     const { isLoggedIn, isLoggingIn, isLoggingInError } = useSelector((state: RootState) => state.user);
 
     const [id, setId] = useState('');
@@ -28,14 +29,16 @@ const SignIn = () => {
     }, []);
 
     const finishLogin = useCallback(() => {
-        dispatch({
-            type: LOG_IN_REQUEST,
-            data: {
-                userId: id,
-                password,
-            },
-        });
-    }, [id, password]);
+        if (!nickname) {
+            dispatch({
+                type: LOG_IN_REQUEST,
+                data: {
+                    userId: id,
+                    password,
+                },
+            });
+        }
+    }, [id, password, nickname]);
 
     useEffect(() => {
         if (!countRef.current) {
@@ -47,6 +50,13 @@ const SignIn = () => {
             }
         }
     }, [isLoggedIn]);
+
+    useEffect(() => {
+        if (nickname) {
+            Router.push('/');
+            return;
+        }
+    }, [nickname]);
 
     return (
         <StyledCard>

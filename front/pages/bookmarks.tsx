@@ -40,7 +40,7 @@ const bookmarks = () => {
     useEffect(() => {
         if (!nickname) {
             alert('로그인이 필요합니다.');
-            Router.back();
+            Router.push('/');
         }
     }, [nickname]);
 

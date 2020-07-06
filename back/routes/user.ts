@@ -46,6 +46,9 @@ router.post('/login', (req, res, next) => {  //로그인
                 if (loginErr) {
                     return next(loginErr);
                 }
+                if (user.ban) {
+                    return res.status(401).send('정지된 유저입니다.');
+                }
                 const fullUser = await User.findOne({
                     where: { id: user.id },
                     include: [{
