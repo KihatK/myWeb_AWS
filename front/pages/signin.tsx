@@ -54,40 +54,50 @@ const SignIn = () => {
     useEffect(() => {
         if (nickname) {
             Router.push('/');
-            return;
         }
     }, [nickname]);
 
     return (
-        <StyledCard>
-            <h1>로그인하기</h1>
-            <br/>
-            <Form onFinish={finishLogin}>
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[{ required: true, message: '아이디를 입력하셔야 합니다!' }]}
-                >
-                    <Input value={id} onChange={changeId} />
-                </Form.Item>
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: '비밀번호를 입력하셔야 합니다!' }]}
-                >
-                    <Input.Password value={password} onChange={changePassword} />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" loading={isLoggingIn}>
-                        로그인
-                    </Button>
-                    <Link href="/signup" prefetch>
-                        <StyledA>회원가입하기</StyledA>
-                    </Link>
-                </Form.Item>
-                {isLoggingInError && <StyledDiv>{isLoggingInError}</StyledDiv>}
-            </Form>
-        </StyledCard>
+        <>
+            {nickname
+                ? (
+                    <div>
+                        이미 로그인 중입니다.
+                    </div>
+                )
+                : (
+                    <StyledCard>
+                        <h1>로그인하기</h1>
+                        <br />
+                        <Form onFinish={finishLogin}>
+                            <Form.Item
+                                label="Username"
+                                name="username"
+                                rules={[{ required: true, message: '아이디를 입력하셔야 합니다!' }]}
+                            >
+                                <Input value={id} onChange={changeId} />
+                            </Form.Item>
+                            <Form.Item
+                                label="Password"
+                                name="password"
+                                rules={[{ required: true, message: '비밀번호를 입력하셔야 합니다!' }]}
+                            >
+                                <Input.Password value={password} onChange={changePassword} />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+                                    로그인
+                                </Button>
+                                <Link href="/signup" prefetch>
+                                    <StyledA>회원가입하기</StyledA>
+                                </Link>
+                            </Form.Item>
+                            {isLoggingInError && <StyledDiv>{isLoggingInError}</StyledDiv>}
+                        </Form>
+                    </StyledCard>
+                )
+            }
+        </>
     );
 }
 

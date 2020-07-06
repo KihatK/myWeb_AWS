@@ -39,21 +39,31 @@ const bookmarks = () => {
 
     useEffect(() => {
         if (!nickname) {
-            alert('로그인이 필요합니다.');
             Router.push('/');
         }
     }, [nickname]);
 
     return (
         <>
-            <StyledH1>북마크한 글들</StyledH1>
-            <StyledTable columns={columns} dataSource={BookMarked} />
-            <StyledDiv>
-                <br/>
-                Made by Kihat
-                <br/>
-                &nbsp;
-            </StyledDiv>
+            {nickname
+                ? (
+                    <main>
+                        <StyledH1>북마크한 글들</StyledH1>
+                        <StyledTable columns={columns} dataSource={BookMarked} />
+                        <StyledDiv>
+                            <br />
+                            Made by Kihat
+                            <br />
+                            &nbsp;
+                        </StyledDiv>
+                    </main>
+                )
+                : (
+                    <div>
+                        로그인이 필요합니다.
+                    </div>
+                )
+            }
         </>
     );
 };

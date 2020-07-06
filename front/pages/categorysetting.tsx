@@ -24,9 +24,20 @@ const categoryorder = () => {
 
     return (
         <>
-            <BcategoryOrder/>
-            <BcategorySetting/>
-            <ScategorySetting/>
+            {admin
+                ? (
+                    <main>
+                        <BcategoryOrder/>
+                        <BcategorySetting/>
+                        <ScategorySetting/>
+                    </main>
+                )
+                : (
+                    <div>
+                        권한이 없습니다.
+                    </div>
+                )
+            }
         </>
     );
 }

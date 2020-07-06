@@ -38,7 +38,6 @@ const newpost = () => {
 
     useEffect(() => {
         if (!admin) {
-            alert('권한이 없습니다.');
             Router.push('/');
         }
     }, [admin]);
@@ -56,27 +55,38 @@ const newpost = () => {
 
     return (
         <>
-            <StyledInput placeholder="제목을 입력하세요" value={title} onChange={changeTitle}/>
-            <Select
-                style={{ width: '1000px' }}
-                labelInValue
-                defaultValue={{ key: category }}
-                onChange={changeCategory}
-            >
-                {scategoryList.map((c: { name: string }) => (
-                    <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
-                ))}
-            </Select>
-            <Select
-                style={{ width: '1000px' }}
-                labelInValue
-                defaultValue={{ key: language }}
-                onChange={changeLanguage}
-            >
-                <Select.Option value="Javascript">JavaScript</Select.Option>
-                <Select.Option value="cpp">C++</Select.Option>
-            </Select>
-            <DraftEditor nickname={nickname} title={title} category={category} language={language}/>
+            {admin
+                ? (
+                    <main>
+                        <StyledInput placeholder="제목을 입력하세요" value={title} onChange={changeTitle} />
+                        <Select
+                            style={{ width: '1000px' }}
+                            labelInValue
+                            defaultValue={{ key: category }}
+                            onChange={changeCategory}
+                        >
+                            {scategoryList.map((c: { name: string }) => (
+                                <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
+                            ))}
+                        </Select>
+                        <Select
+                            style={{ width: '1000px' }}
+                            labelInValue
+                            defaultValue={{ key: language }}
+                            onChange={changeLanguage}
+                        >
+                            <Select.Option value="Javascript">JavaScript</Select.Option>
+                            <Select.Option value="cpp">C++</Select.Option>
+                        </Select>
+                        <DraftEditor nickname={nickname} title={title} category={category} language={language} />
+                    </main>
+                )
+                : (
+                    <div>
+                        권한이 없습니다.
+                    </div>
+                )
+            }
         </>
     )
 }
