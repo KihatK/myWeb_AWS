@@ -20,7 +20,7 @@ const newpost = () => {
     const { isAddedPost } = useSelector((state: RootState) => state.post);
 
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('Module');
+    const [category, setCategory] = useState(scategoryList[0]?.name);
     const [language, setLanguage] = useState('javascript');
     const countRef = useRef(false);
 
