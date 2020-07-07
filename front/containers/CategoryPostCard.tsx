@@ -1,12 +1,11 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Popover } from 'antd';
 import moment from 'moment';
 import Prismjs from '../prismjs/prism';
 
-import CommentList from '../components/CommentList';
-import CommentForm from './CommentForm';
 import { RootState } from '../reducers';
 import { REMOVE_POST_REQUEST } from '../reducers/post';
 import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST } from '../reducers/user';
@@ -19,8 +18,12 @@ import { PostProps } from '../util/props';
 
 moment.locale('ko');
 
+const CommentList = dynamic(() => import('../components/CommentList'), { loading: () => <p>로딩중...</p>, ssr: false });
+const CommentForm = dynamic(() => import('./CommentForm'), { loading: () => <p>로딩중...</p>, ssr: false });
+
 const CategoryPostCard = ({ post }: PostProps) => {
     const dispatch = useDispatch();
+    const admin = useSelector((state: RootState) => state.user.me?.admin);
     const nickname = useSelector((state: RootState) => state.user.me?.nickname);
     const BookMarked = useSelector((state: RootState) => state.user.me?.BookMarked);
     const { isRemovedPost } = useSelector((state: RootState) => state.post);
@@ -117,8 +120,14 @@ const CategoryPostCard = ({ post }: PostProps) => {
             <DragA onClick={clickToggleComment}>
                 <u>댓글</u>
             </DragA>
-            <StyledButtonDelete onClick={removePost(post.uuid)}>삭제</StyledButtonDelete>
-            <StyledButtonEdit onClick={editPost(post.uuid)}>수정</StyledButtonEdit>
+            {admin
+                && (
+                    <>
+                        <StyledButtonDelete onClick={removePost(post.uuid)}>삭제</StyledButtonDelete>
+                        <StyledButtonEdit onClick={editPost(post.uuid)}>수정</StyledButtonEdit>
+                    </>
+                )
+            }
             {toggleComment 
                 ? <StyledCommentDiv>
                     <CommentForm post={post}/>

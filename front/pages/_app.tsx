@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { AppProps } from 'next/app';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import wrapper from '../store/makeStore';
-import AppLayout from '../components/AppLayout';
 import { RootState } from '../reducers';
 import { GET_BCATEGORY_REQUEST } from '../reducers/category';
 
@@ -19,6 +19,8 @@ import 'prismjs/themes/prism.css'; // add prism.css to add highlights
 interface Props extends AppProps {
     Component: React.FC,
 };
+
+const AppLayout = dynamic(() => import('../components/AppLayout'));
 
 const App = ({ Component }: Props) => {
     const dispatch = useDispatch();

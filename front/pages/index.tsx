@@ -1,9 +1,9 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import PostCard from '../containers/PostCard';
 import wrapper, { IStore } from '../store/makeStore';
 import { RootState } from '../reducers';
 import { GET_POSTS_REQUEST } from '../reducers/post';
@@ -11,6 +11,8 @@ import { LOAD_USER_REQUEST } from '../reducers/user';
 import { GET_BCATEGORY_REQUEST } from '../reducers/category';
 import { StyledDiv } from '../style/pages/home';
 import { Post } from '../util/post';
+
+const PostCard = dynamic(() => import('../containers/PostCard'), { loading: () => <p>로딩중...</p> });
 
 const Home = () => {
     const mainPosts = useSelector((state: RootState) => state.post.mainPosts);

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 
 import Draft, { EditorState, RichUtils, convertFromHTML, ContentState } from 'draft-js';
@@ -30,9 +31,10 @@ import createPrismPlugin from 'draft-js-prism-plugin';
 
 import { stateToHTML } from 'draft-js-export-html'
 
-import ImageAdd from '../draftjs/ImageAddHooks';
 import { EDIT_POST_REQUEST } from '../reducers/post';
 import { StyledDiv, StyledButton, HeadBtnDiv, EditorStyleDiv } from '../style/containers/DraftEditor';
+
+const ImageAdd = dynamic(() => import('../draftjs/ImageAddHooks'), { ssr: false });
 
 const toolbarPlugin = createToolbarPlugin();
 const { Toolbar } = toolbarPlugin;

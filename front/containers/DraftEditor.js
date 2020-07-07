@@ -1,8 +1,9 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Draft, { EditorState, convertFromRaw, RichUtils, ContentState } from 'draft-js';
+import Draft, { EditorState, convertFromRaw, RichUtils } from 'draft-js';
 import Editor, { composeDecorators } from 'draft-js-plugins-editor';
 import createToolbarPlugin, { Separator } from 'draft-js-static-toolbar-plugin';
 import {
@@ -31,9 +32,10 @@ import createPrismPlugin from 'draft-js-prism-plugin';
 
 import { stateToHTML } from 'draft-js-export-html'
 
-import ImageAdd from '../draftjs/ImageAddHooks';
 import { ADD_POST_REQUEST } from '../reducers/post';
 import { StyledDiv, StyledButton, HeadBtnDiv, EditorStyleDiv } from '../style/containers/DraftEditor';
+
+const ImageAdd = dynamic(() => import('../draftjs/ImageAddHooks'), { ssr: false });
 
 const emptyContent = convertFromRaw({
     entityMap: {},

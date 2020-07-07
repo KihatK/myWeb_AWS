@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useDispatch, useSelector } from 'react-redux';
 import { Popover } from 'antd';
 import Prismjs from '../prismjs/prism';
 import moment from 'moment';
 
-import CommentList from '../components/CommentList';
 import { RootState } from '../reducers';
 import { BOOKMARK_POST_REQUEST, UNBOOKMARK_POST_REQUEST } from '../reducers/user';
 import {
@@ -15,6 +15,8 @@ import { BookMarkType } from '../util/user';
 import { PostProps } from '../util/props';
 
 moment.locale('ko');
+
+const CommentList = dynamic(() => import('../components/CommentList'), { loading: () => <p>로딩중...</p>, ssr: false });
 
 const PostCard = ({ post }: PostProps) => {
     const dispatch = useDispatch();

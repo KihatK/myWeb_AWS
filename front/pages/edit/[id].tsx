@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import Router from 'next/router';
+import React from 'react';
+import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import { Select } from 'antd';
 import axios from 'axios';
 
-import DraftEditorEdit from '../../containers/DraftEditorEdit';
 import wrapper, { IStore } from '../../store/makeStore';
 import { RootState } from '../../reducers';
 import { LOAD_USER_REQUEST } from '../../reducers/user';
@@ -13,74 +11,15 @@ import { GET_BCATEGORY_REQUEST, GET_SCATEGORYLIST_REQUEST } from '../../reducers
 import { GET_POST_REQUEST } from '../../reducers/post';
 import { StyledInput } from '../../style/pages/editid';
 
+const EditPostContent = dynamic(() => import('../../components/EditPostContent'), { loading: () => <p>로딩중...</p> });
+
 const Id = () => {
-    const nickname = useSelector((state: RootState) => state.user.me?.nickname);
     const admin = useSelector((state: RootState) => state.user.me?.admin);
-    const scategoryList = useSelector((state: RootState) => state.category.scategoryList);
-    const { singlePost, isEditedPost } = useSelector((state: RootState) => state.post);
-
-    const [title, setTitle] = useState(singlePost.title);
-    const [category, setCategory] = useState(singlePost.scategory);
-    const [language, setLanguage] = useState('javascript');
-    const countRef = useRef(false);
-
-    const changeTitle = useCallback((e) => {
-        setTitle(e.target.value);
-    }, []);
-    const changeCategory = useCallback(value => {
-        setCategory(value.key);
-    }, []);
-    const changeLanguage = useCallback(value => {
-        setLanguage(value.key);
-    }, []);
-
-    useEffect(() => {
-        if (!admin) {
-            Router.push('/');
-        }
-    }, [admin]);
-
-    useEffect(() => {
-        if (!countRef.current) {
-            countRef.current = true;
-        }
-        else {
-            if (isEditedPost) {
-                Router.back();
-            }
-        }
-    }, [isEditedPost]);
 
     return (
         <>
             {admin
-                ? (
-                    <main>
-                        <StyledInput placeholder="제목을 입력하세요" value={title} onChange={changeTitle} />
-                        <Select
-                            style={{ width: '1000px' }}
-                            labelInValue
-                            defaultValue={{ key: category }}
-                            onChange={changeCategory}
-                        >
-                            {scategoryList.map((c: { name: string }) => (
-                                <Select.Option key={c.name} value={c.name}>{c.name}</Select.Option>
-                            ))}
-                        </Select>
-                        <Select
-                            style={{ width: '1000px' }}
-                            labelInValue
-                            defaultValue={{ key: language }}
-                            onChange={changeLanguage}
-                        >
-                            <Select.Option value="javascript">JavaScript</Select.Option>
-                            <Select.Option value="cpp">C++</Select.Option>
-                        </Select>
-                        <DraftEditorEdit nickname={nickname} title={title} category={category}
-                            language={language} editing={singlePost.content} uuid={singlePost.uuid}
-                        />
-                    </main>
-                )
+                ? <EditPostContent/>
                 : (
                     <div>
                         권한이 없습니다.

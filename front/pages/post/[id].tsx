@@ -1,15 +1,17 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
-import CategoryPostCard from '../../containers/CategoryPostCard';
 import wrapper, { IStore } from '../../store/makeStore';
 import { RootState } from '../../reducers';
 import { GET_POST_REQUEST } from '../../reducers/post';
 import { GET_SCATEGORYLIST_REQUEST, GET_BCATEGORY_REQUEST } from '../../reducers/category';
 import { LOAD_USER_REQUEST } from '../../reducers/user';
 import { END } from 'redux-saga';
+
+const CategoryPostCard = dynamic(() => import('../../containers/CategoryPostCard'), { loading: () => <p>로딩중...</p> });
 
 const Id = () => {
     const router = useRouter();
