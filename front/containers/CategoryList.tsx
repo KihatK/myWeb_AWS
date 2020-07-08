@@ -54,10 +54,12 @@ const CategoryList = ({ category }: CategoryListProps) => {
                             <br/>
                         </div>
                     )}
-                    &nbsp;&nbsp;
                     {admin && 
                         (
-                            <a onClick={addCategory}>+</a>
+                            <>
+                                &nbsp;&nbsp;
+                                <a onClick={addCategory}>+</a>
+                            </>
                         )
                     }
                 </div>
