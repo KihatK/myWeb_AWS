@@ -25,6 +25,6 @@ const makeStore: MakeStore<RootState> = (context: Context) => {
     return store;
 };
 
-const wrapper = createWrapper<RootState>(makeStore, { debug: true });
+const wrapper = createWrapper<RootState>(makeStore, { debug: process.env.NODE_ENV === 'development' });
 
 export default wrapper;
