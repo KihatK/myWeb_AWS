@@ -38,3 +38,22 @@ color: #1890ff; 대신 overflow: hidden으로 바꿈.
           box-shadow: none;
 }
 border-bottom: 2px solid #f0f0f0; 으로 바꿈.
+--------------------------------------------------------------------------
+draft-js-code demo draft.css
+.DraftEditor-editorContainer blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-family: 'Hoefler Text', 'Georgia', serif;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 10px 20px;
+}
+
+.DraftEditor-editorContainer .public-DraftStyleDefault-pre > pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+  font-size: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+로 바꿈.
