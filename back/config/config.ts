@@ -18,7 +18,7 @@ interface IConfigGroup {
 const config: IConfigGroup = {
   "development": {
     "username": "root",
-    "password": undefined,
+    "password": process.env.DB_PASSWORD,
     "database": "myWeb_dev",
     "host": "127.0.0.1",
     "dialect": "mysql",
@@ -26,7 +26,7 @@ const config: IConfigGroup = {
   },
   "test": {
     "username": "root",
-    "password": undefined,
+    "password": process.env.DB_PASSWORD,
     "database": "dmyWeb_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
@@ -34,7 +34,7 @@ const config: IConfigGroup = {
   },
   "production": {
     "username": "root",
-    "password": undefined,
+    "password": process.env.DB_PASSWORD,
     "database": "myWeb_product",
     "host": "127.0.0.1",
     "dialect": "mysql",
