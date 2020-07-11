@@ -8,7 +8,7 @@ import CategoryDrawer from '../containers/CategoryDrawer';
 import UserProfile from '../containers/UserProfile';
 import { RootState } from '../reducers';
 import {
-    StyledCol, StyledMenu, StyledMenuAlign, StyledMenuItem, StyledMenuItemBlog, StyledMenuItemLogin
+    StyledCol, StyledMenu, StyledMenuAlign, StyledMenuItem, StyledMenuItemBlog, StyledMenuItemLogin, MenuUnderlined, DraftEditorStyled,
 } from '../style/components/AppLayout';
 
 interface Props {
@@ -29,6 +29,8 @@ const AppLayout = ({ children }: Props) => {
 
     return (
         <>
+            <MenuUnderlined/>
+            <DraftEditorStyled/>
             <Row>
                 <StyledCol xs={24} md={4}>
                     <StyledMenu mode="horizontal">
