@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 9000",
+    "dev": "next -p 3060",
     "build": "cross-env NODE_ENV=production ANALYZE=true next build",
     "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production next start -p 3060"
@@ -46,6 +46,7 @@
     "moment": "^2.27.0",
     "next": "^9.4.4",
     "next-redux-wrapper": "^6.0.2",
+    "pm2": "^4.4.0",
     "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
