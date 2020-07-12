@@ -6,8 +6,9 @@ import post from './post';
 import postlist from './postlist';
 import user from './user';
 import image from './image';
+import { backUrl } from '../config/config';
 
-axios.defaults.baseURL = 'http://localhost:3065/api';
+axios.defaults.baseURL = `${backUrl}/api`;
 
 export default function* rootSaga() {
     yield all([
