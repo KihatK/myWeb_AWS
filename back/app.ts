@@ -54,6 +54,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: false,
+        domain: process.env.NODE_ENV === 'production' && '.kihat.cf',
     },
     secret: process.env.COOKIE_SECRET!,
     name: 'v)g*3',
