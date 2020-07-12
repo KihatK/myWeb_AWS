@@ -33,7 +33,7 @@ if (prod) {
     app.use(helmet());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: ['http://52.78.64.92'],
+        origin: ['kihat.cf'],
         credentials: true,
     }));
 }

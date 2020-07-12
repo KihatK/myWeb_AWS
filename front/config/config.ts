@@ -1,1 +1,1 @@
-export const backUrl = 'http://52.78.128.133';
+export const backUrl = 'http://api.kihat.cf';
