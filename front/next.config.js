@@ -1,9 +1,10 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
+const withTypescript = require('@zeit/next-typescript')
 const CompressionPlugin = require('compression-webpack-plugin');
 
-module.exports = withBundleAnalyzer({
+module.exports = withTypescript({
     distDir: '.next',
     webpack(config, { webpack }) {
         const prod = process.env.NODE_ENV === 'production';
