@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Router from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Draft, { EditorState, convertFromRaw, RichUtils } from 'draft-js';
 import Editor, { composeDecorators } from 'draft-js-plugins-editor';
@@ -111,11 +110,9 @@ const HeadlinesButton = (props) => {
 
 const DraftEditor = ({ nickname, title, category, language }) => {
     const dispatch = useDispatch();
-    const { isAddedPost } = useSelector(state => state.post);
 
     const [editorState, setEditorState] = useState(() => EditorState.createWithContent(emptyContent));
     const editor = useRef();
-    const countRef = useRef(false);
 
     const clickPost = useCallback(() => {
         const inlineStyles = exporter(editorState);
@@ -157,17 +154,6 @@ const DraftEditor = ({ nickname, title, category, language }) => {
             setEditorState(EditorState.push(editorState, newContentState, "change-block-data"));
         }
     }, [editorState]);
-
-    useEffect(() => {
-        if (!countRef.current) {
-            countRef.current = true;
-        }
-        else {
-            if (isAddedPost) {
-                Router.push('/');
-            }
-        }
-    }, [isAddedPost]);
 
     //커멘드 사용 허용
     const handleKeyCommand = (command, editorState) => {
