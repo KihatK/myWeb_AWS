@@ -36,6 +36,16 @@ import { StyledDiv, StyledButton, HeadBtnDiv, EditorStyleDiv } from '../style/co
 
 const ImageAdd = dynamic(() => import('../draftjs/ImageAddHooks'), { ssr: false });
 
+const emptyContent = convertFromRaw({
+    entityMap: {},
+    blocks: [{
+        text: '',
+        key: 'foo',
+        type: 'unstyled',
+        entityRanges: [],
+    }],
+});
+
 const toolbarPlugin = createToolbarPlugin();
 const { Toolbar } = toolbarPlugin;
 const focusPlugin = createFocusPlugin();
@@ -100,13 +110,17 @@ const HeadlinesButton = (props) => {
 
 const DraftEditor = ({ nickname, title, category, language, editing, uuid }) => {
     const dispatch = useDispatch();
-    const blocksFromHTML = convertFromHTML(editing);
-    const state = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap,
-    );
 
-    const [editorState, setEditorState] = useState(() => EditorState.createWithContent(state));
+    useEffect(() => {
+        const blocksFromHTML = convertFromHTML(editing);
+        const state = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap,
+        );
+        setEditorState(state);
+    }, []);
+
+    const [editorState, setEditorState] = useState(() => EditorState.createWithContent(emptyContent));
     const editor = useRef();
 
     const clickPost = useCallback(() => {
