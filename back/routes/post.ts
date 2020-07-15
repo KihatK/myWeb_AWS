@@ -1,6 +1,8 @@
 import path from 'path';
 import express from 'express';
 import multer from 'multer';
+import multerS3 from 'multer-s3';
+import AWS from 'aws-sdk';
 import { Sequelize } from 'sequelize';
 
 import Post from '../models/post';
@@ -11,15 +13,18 @@ import { isLoggedIn, isAdminLoggedIn } from './middlewares';
 
 const router = express.Router();
 
+AWS.config.update({
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    region: 'ap-northeast-2',
+});
 const upload = multer({
-    storage: multer.diskStorage({
-        destination(req, file, cb) {
-            cb(null, 'uploads');
-        },
-        filename(req, file, cb) {
-            const ext = path.extname(file.originalname);
-            const basename = path.basename(file.originalname, ext);
-            cb(null, basename + Date.now() + ext);
+    storage: multerS3({
+        s3: new AWS.S3(),
+        bucket: 'kihat-s3',
+        key(req, file, cb) {
+            cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
+            //original은 폴더 이름을 만들고 그 곳에 넣는 것
         },
     }),
     limits: { fileSize: 20 * 1024 * 1024 },
@@ -53,7 +58,7 @@ router.post('/', isAdminLoggedIn, async (req, res, next) => {  //게시글 작�
     }
 });
 router.post('/image', upload.single('image'), async (req, res) => {
-    return res.json(req.file.filename);
+    return res.json(req.file.location);
 });
 
 router.get('/:uuid', async (req, res, next) => {  //게시글 1개 가져오기

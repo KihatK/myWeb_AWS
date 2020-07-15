@@ -5,7 +5,6 @@ import { Form } from 'antd';
 import { FileImageOutlined } from '@ant-design/icons';
 
 import { UPLOAD_IMAGE_REQUEST } from '../reducers/image';
-import { backUrl } from '../config/config';
 
 const ConfirmBtn = styled.button`
     &&:focus {
@@ -95,7 +94,7 @@ const ImageAdd = ({ onChange, editorState, modifier }) => {
     };
 
     const addImage = useCallback(() => {
-        onChange(modifier(editorState, `${backUrl}/${imageUrl}`));
+        onChange(modifier(editorState, `${imageUrl}`));
         setOpen(false);
     }, [editorState, imageUrl]);
 
