@@ -29,6 +29,7 @@ sequelize.sync()
 passportConfig();
 
 if (prod) {
+    app.set('trust proxy', 1);
     app.use(hpp());
     app.use(helmet());
     app.use(morgan('combined'));
@@ -51,6 +52,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
         httpOnly: true,
         secure: true,
