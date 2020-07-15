@@ -33,7 +33,7 @@ if (prod) {
     app.use(helmet());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: ['http://kihat.cf'],
+        origin: ['https://kihat.cf'],
         credentials: true,
     }));
 }
@@ -53,7 +53,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: false,
+        secure: true,
         domain: process.env.NODE_ENV === 'production' && '.kihat.cf',
     },
     secret: process.env.COOKIE_SECRET!,
