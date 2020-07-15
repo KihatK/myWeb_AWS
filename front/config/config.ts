@@ -1,1 +1,1 @@
-export const backUrl = process.env.NODE_ENV === 'production' ? 'http://api.kihat.cf' : 'http://localhost:3065';
+export const backUrl = process.env.NODE_ENV === 'production' ? 'https://api.kihat.cf' : 'http://localhost:3065';
