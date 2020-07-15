@@ -57,7 +57,7 @@ const SigninContent = () => {
                     <Button type="primary" htmlType="submit" loading={isLoggingIn}>
                         로그인
                                 </Button>
-                    <Link href="/signup" prefetch>
+                    <Link href="/signup">
                         <StyledA>회원가입하기</StyledA>
                     </Link>
                 </Form.Item>

@@ -36,7 +36,7 @@ const CategoryListContent = () => {
             <StyledTable columns={columns} dataSource={postList} />
             {admin && 
                 (
-                    <Link href="/newpost" prefetch>
+                    <Link href="/newpost">
                         <a>
                             <StyledButton>
                                 글쓰기

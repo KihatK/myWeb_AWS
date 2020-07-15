@@ -22,14 +22,14 @@ const UserProfile = () => {
         <StyledDiv>
             <StyledAvatar>{nickname ? nickname[0] : null}</StyledAvatar>
             <StyledSpan>{`${nickname}님`}</StyledSpan>
-            <Link href="/bookmarks" prefetch>
+            <Link href="/bookmarks">
                 <a><StyledBook/></a>
             </Link>
-            <Link href="/setting" prefetch>
+            <Link href="/setting">
                 <a><SettingOutlined /></a>
             </Link>
             {admin && (
-                <Link href="/categorysetting" prefetch>
+                <Link href="/categorysetting">
                     <a><StyledProfile/></a>
                 </Link>
             )}

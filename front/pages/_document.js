@@ -1,6 +1,7 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
+import Helmet from 'react-helmet';
 
 export default class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -13,6 +14,7 @@ export default class MyDocument extends Document {
             const initialProps = await Document.getInitialProps(ctx);
             return {
                 ...initialProps,
+                helmet: Helmet.renderStatic(),
                 styles: (
                     <>
                         {initialProps.styles}
@@ -30,10 +32,15 @@ export default class MyDocument extends Document {
     }
 
     render() {
+        const { htmlAttributes, bodyAttributes, ...helmet } = this.props.helmet;
+        const htmlAttrs = htmlAttributes.toComponent();
+        const bodyAttrs = bodyAttributes.toComponent();
         return (
-            <Html>
-                <Head/>
-                <body>
+            <Html {...htmlAttrs}>
+                <Head>
+                    {Object.values(helmet).map(el => el.toComponent())}
+                </Head>
+                <body {...bodyAttrs}>
                     <script src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019"/>
                     <Main/>
                     <NextScript/>
