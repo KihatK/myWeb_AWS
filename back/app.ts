@@ -68,6 +68,6 @@ app.use('/api/post', postAPIRouter);
 app.use('/api/bcategory', bcategoryAPIRouter);
 app.use('/api/scategory', scategoryAPIRouter);
 
-app.listen(process.env.NODE_ENV === 'production' ? 80 : 3065, () => {
+app.listen(3065, () => {
     console.log(`Server is running on port 80`);
 });
