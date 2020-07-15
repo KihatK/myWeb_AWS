@@ -1,5 +1,5 @@
 import path from 'path';
-import express from 'express';
+import express, { Request } from 'express';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
@@ -10,6 +10,10 @@ import User from '../models/user';
 import Scategory from '../models/scategory';
 import Comment from '../models/comment';
 import { isLoggedIn, isAdminLoggedIn } from './middlewares';
+
+interface S3 extends Request {
+    file: any,
+};
 
 const router = express.Router();
 
@@ -57,8 +61,8 @@ router.post('/', isAdminLoggedIn, async (req, res, next) => {  //게시글 작�
         return next(e);
     }
 });
-router.post('/image', upload.single('image'), async (req, res) => {
-    return res.json(req.file.originalname);
+router.post('/image', upload.single('image'), async (req, res) => { 
+    return res.json((req as S3).file.location);
 });
 
 router.get('/:uuid', async (req, res, next) => {  //게시글 1개 가져오기
