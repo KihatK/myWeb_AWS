@@ -58,8 +58,7 @@ router.post('/', isAdminLoggedIn, async (req, res, next) => {  //게시글 작�
     }
 });
 router.post('/image', upload.single('image'), async (req, res) => {
-    console.log(req.file);
-    return res.json(req.file.location);
+    return res.json(req.file);
 });
 
 router.get('/:uuid', async (req, res, next) => {  //게시글 1개 가져오기
