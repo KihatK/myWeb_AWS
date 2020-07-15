@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 
-import Draft, { EditorState, RichUtils, convertFromHTML, ContentState } from 'draft-js';
+import Draft, { EditorState, RichUtils, convertFromHTML, convertFromRaw, ContentState } from 'draft-js';
 import Editor, { composeDecorators } from 'draft-js-plugins-editor';
 import createToolbarPlugin, { Separator } from 'draft-js-static-toolbar-plugin';
 import {
@@ -117,7 +117,7 @@ const DraftEditor = ({ nickname, title, category, language, editing, uuid }) => 
             blocksFromHTML.contentBlocks,
             blocksFromHTML.entityMap,
         );
-        setEditorState(state);
+        setEditorState(EditorState.createWithContent(state));
     }, []);
 
     const [editorState, setEditorState] = useState(() => EditorState.createWithContent(emptyContent));
