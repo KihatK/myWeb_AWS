@@ -94,7 +94,6 @@ const ImageAdd = ({ onChange, editorState, modifier }) => {
     };
 
     const addImage = useCallback(() => {
-        console.log(imageUrl);
         onChange(modifier(editorState, `${imageUrl}`));
         setOpen(false);
     }, [editorState, imageUrl]);
