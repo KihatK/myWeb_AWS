@@ -1,0 +1,18 @@
+node 설치:
+sudo apt-get update
+sudo apt-get install -y build-essential
+sudo apt-get install curl
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash --
+sudo apt-get install -y nodejs
+
+mysql 8 설치:
+wget -c https://repo.mysql.com//mysql-apt-config_0.8.13-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
+sudo apt update
+sudo apt-get install mysql-server
+비밀번호 설정:
+sudo su
+passwd root 후 비밀번호 입력 후 exit;
+sudo mysql_secure_installation
+mysql -uroot -p
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '비밀번호';
