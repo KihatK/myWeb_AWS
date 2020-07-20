@@ -16,3 +16,11 @@ passwd root 후 비밀번호 입력 후 exit;
 sudo mysql_secure_installation
 mysql -uroot -p
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '비밀번호';
+
+nginx & https 인증서(letsencrypt)
+sudo apt-get install nginx
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+sudo lsof -i tcp:80 (80번 포트 확인)
+nginx 설정 후
+./certbot-auto 실행

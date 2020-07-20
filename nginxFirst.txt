@@ -1,3 +1,7 @@
+경로: /etc/nginx/nginx.conf
+//설정 변경 후 다시 시작
+sudo systemctl restart nginx
+
 server {
     server_name kihat.cf;
     listen 80;
