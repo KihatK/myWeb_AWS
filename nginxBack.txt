@@ -1,5 +1,5 @@
 server {
-    server_name kihat.cf;
+    server_name api.kihat.cf;
     location / {
             proxy_set_header HOST $host;
             proxy_set_header X-Forwarded-Proto $scheme;
@@ -8,18 +8,18 @@ server {
     }
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/kihat.cf/fullchain.pem # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/kihat.cf/privkey.pem # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/api.kihat.cf/fullchain.pem # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/api.kihat.cf/privkey.pem # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; #managed by Certbot
 
 }
 
 server {
-    if ($host = kihat.cf) {
+    if ($host = api.kihat.cf) {
             return 301 https://$host$request_uri;
     } # managed by Certbot
-    server_name kihat.cf;
+    server_name api.kihat.cf;
     listen 80;
     return 404; # managed by Certbot
 }
